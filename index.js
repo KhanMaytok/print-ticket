@@ -11,7 +11,7 @@ const default_printer = m_printer.getDefaultPrinterName();
 printer.init({
     type: 'epson',                                     // Printer type: 'star' or 'epson'
     interface: `printer:${default_printer}`,                        // Printer interface
-                          // Printer character set
+    characterSet: 'CHARCODE_SPAIN1',                      // Printer character set
     removeSpecialCharacters: false,                   // Removes special characters - default: false
     replaceSpecialCharacters: true,                   // Replaces special characters listed in config files - default: true
     extraSpecialCharacters:{'£':163}                  // Adds additional special characters to those listed in the config files
@@ -30,29 +30,61 @@ app.post('/', (req, res) => {
     console.log();
 
     printer.alignCenter();
+    //printer.printImage('./assets/olaii-logo-black.png', function(done){});
+    printer.bold(true)
     printer.println(`${body.enterprise_name}`);
+    printer.bold(false)
+    printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
+    printer.println(`PUNTO DE EMISIÓN: `)
     printer.println(`R.U.C. ${body.enterprise_ruc}`);
+    printer.drawLine();
+
     printer.println("BOLETO DE VENTA");
+    printer.setTextDoubleHeight();
+    printer.setTextDoubleWidth();
     printer.println(`${body.serie}-${body.number}`);
-    printer.println(" ");
+    printer.setTextNormal();
     printer.alignLeft();
-    printer.println(`FECHA DE EMISION: ${body.now}`);
-    printer.println(`FECHA DE COMPRA: ${body.buy_date}`);
-    printer.println(`VENDEDOR: ${body.seller}`);
+    printer.println(`FECHA EMISION: ${body.buy_date}`);
+    printer.println(`ATENDIDO POR : ${body.seller}`);
     printer.drawLine();
-    printer.println(`DOC PASAJERO:     ${body.dni}`);
-    printer.println(`NOMBRES PASAJERO: ${body.passenger_name}`);
-    printer.println(`ORIGEN:           ${body.departure}`);
-    printer.println(`DESTINO:          ${body.arrival}`);
-    printer.setTextDoubleHeight();                      // Set text to double height
-    printer.setTextDoubleWidth();  
+    if(body.enterpriseClient === true){
+        printer.println(`RAZÓN SOCIAL:   ${body.dni}`);
+        printer.println(`RUC:            ${body.passenger_name}`);
+    }
+    printer.println(`DOC PASAJERO: ${body.dni}`);
+    printer.println(`PASAJERO    : ${body.passenger_name}`);
+    printer.drawLine();
+    printer.alignCenter();
+    printer.bold(true);
+    printer.println(`DATOS DEL VIAJE`);
+    printer.bold(false);
+    printer.drawLine();
+    printer.alignLeft();
+    //printer.setTextDoubleHeight();                      // Set text to double height
+    printer.setTextDoubleWidth();
+    printer.println(`ORIGEN     : ${body.departure}`);
+    printer.println(`DESTINO    : ${body.arrival}`);      
     printer.println(`FECHA VIAJE: ${body.departure_date}`);
-    printer.println(`HORA VIAJE: ${body.departure_hour}`);
-    printer.println(`ASIENTO: ${body.seat}`);
-    printer.setTextNormal();    
-    printer.println(`IMPORTE:          S/. ${body.total}`);
-    printer.println(`OBSERVACIONES:    ${body.additional_info}`);
+    printer.println(`HORA VIAJE : ${body.departure_hour}`);
+    printer.println(`ASIENTO    : ${body.seat}`);
+    printer.println(`IMPORTE    : S/ ${body.total}`);
+    printer.setTextNormal(); 
+
     printer.drawLine();
+    printer.alignCenter();
+    printer.println(`SON: ${body.total_letter}`);
+    printer.alignLeft();
+
+    printer.drawLine(); //----------------------------------
+    printer.println(`FORMA DE PAGO: ${body.payment_type}`);
+    printer.drawLine(); //----------------------------------
+
+    printer.alignCenter();
+    printer.printQR(`${body.ticket_id}`)
+    
+    printer.println(`Estimado usuario, verifique las condiciones generales del servicio en nuestra página web www.angeldivino.com.pe`);
+    printer.println(`Este boleto se puede canjear por un comprobante electrónico en: https://angeldivino.com/mis-comprobantes/`)
     printer.partialCut();
     printer.execute(function(err){
       if (err) {
