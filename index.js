@@ -55,8 +55,8 @@ app.post('/', (req, res) => {
         printer.println(`ATENDIDO POR : ${body.seller}`);
         printer.drawLine();
         if (body.enterpriseClient === true) {
-            printer.println(`RAZÓN SOCIAL:   ${body.dni}`);
-            printer.println(`RUC:            ${body.passenger_name}`);
+            printer.println(`RAZÓN SOCIAL: ${body.ruc}`);
+            printer.println(`RUC         : ${body.enterprise_name}`);
         }
         printer.println(`DOC PASAJERO: ${body.dni}`);
         printer.println(`PASAJERO    : ${body.passenger_name}`);
