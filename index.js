@@ -54,9 +54,9 @@ app.post('/', (req, res) => {
         printer.println(`FECHA EMISION: ${body.buy_date}`);
         printer.println(`ATENDIDO POR : ${body.seller}`);
         printer.drawLine();
-        if (body.enterpriseClient === true) {
-            printer.println(`RAZÓN SOCIAL: ${body.ruc}`);
-            printer.println(`RUC         : ${body.enterprise_name}`);
+        if (body.enterprise_client_id !== "0") {
+            printer.println(`RAZÓN SOCIAL: ${body.enterprise_client}`);
+            printer.println(`RUC         : ${body.enterprise_client_id}`);
         }
         printer.println(`DOC PASAJERO: ${body.dni}`);
         printer.println(`PASAJERO    : ${body.passenger_name}`);
