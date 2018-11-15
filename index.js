@@ -41,7 +41,7 @@ app.post('/', (req, res) => {
         printer.println(`${body.enterprise_name}`);
         printer.bold(false)
         printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
-        printer.println(`PUNTO DE EMISIÓN: `)
+        printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.drawLine();
 
@@ -103,6 +103,35 @@ app.post('/', (req, res) => {
     });
 
 })
+
+app.post('/credit-note', (req, res) => {
+    console.log(req.body);
+    let body = req.body;
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    console.log();
+
+    printer.alignCenter();
+    printer.printImage('./logo.png', function (done) {
+        printer.println(" ")
+        printer.println(" ")
+        printer.bold(true)
+        printer.println(`${body.enterprise_name}`);
+        printer.bold(false)
+        printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
+        printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
+        printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.drawLine();
+
+        printer.println("NOTA DE CRÉDITO");
+        printer.setTextDoubleHeight();
+        printer.setTextDoubleWidth();
+        printer.println(`${body.cancel_serie}-${body_cancel_number}`);
+        printer.setTextNormal();
+    })
+})
+
 
 app.get('/', (req, res) => {
     res.send("HELLO FRIEND")
