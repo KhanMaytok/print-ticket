@@ -6,6 +6,7 @@ git commit -m "juajua"
 git fetch --all
 git reset --hard origin/master
 git pull origin master
-npm install -g pm2
-npm install
+call npm install -g pm2
+call npm install
+echo "Everything installed"
 pause
