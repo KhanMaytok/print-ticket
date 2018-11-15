@@ -7,3 +7,4 @@ git reset --hard origin/master
 git pull origin master
 npm install
 npm install -g pm2
+pause
