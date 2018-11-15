@@ -2,10 +2,12 @@ const m_printer = require('printer')
 const printer = require('node-thermal-printer')
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+app.use(cors())
 const jsonParser = bodyParser.json()
 console.log(m_printer.getDefaultPrinterName())
 const default_printer = m_printer.getDefaultPrinterName();
@@ -123,12 +125,21 @@ app.post('/credit-note', (req, res) => {
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.drawLine();
-
         printer.println("NOTA DE CRÉDITO");
         printer.setTextDoubleHeight();
         printer.setTextDoubleWidth();
-        printer.println(`${body.cancel_serie}-${body_cancel_number}`);
+        printer.println(`${body.cancel_serie}-${body.cancel_number}`);
         printer.setTextNormal();
+        printer.println(`Para: ${body.ticket_serie}-${body.ticket_number}`);
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        res.send('<h1>PRINTED TICKET</h1>')
     })
 })
 
