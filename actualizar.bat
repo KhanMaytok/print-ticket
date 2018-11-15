@@ -1,3 +1,3 @@
 @echo off
-git pull origin master
+call git pull origin master
 pause
