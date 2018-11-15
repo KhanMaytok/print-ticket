@@ -1,3 +1,4 @@
+@echo off
 git init
 git remote add origin https://github.com/KhanMaytok/print-ticket.git
 git add --all
