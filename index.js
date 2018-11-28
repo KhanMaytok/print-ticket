@@ -47,7 +47,12 @@ app.post('/', (req, res) => {
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.drawLine();
 
-        printer.println("BOLETO DE VENTA");
+        let invoice_type = "BOLETA"
+        if (body.enterprise_client_id !== "0") {
+            invoice_type = "FACTURA";
+        }
+
+        printer.println(`${invoice_type} ELECTRÓNICA`);
         printer.setTextDoubleHeight();
         printer.setTextDoubleWidth();
         printer.println(`${body.serie}-${body.number}`);
