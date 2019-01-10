@@ -11,7 +11,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "node-thermal-printer": "^2.0.0",
+    "node-thermal-printer": "github:khanmaytok/node-thermal-printer#find-codepage-automatically-iconv",
     "printer": "^0.2.2"
   }
 }
