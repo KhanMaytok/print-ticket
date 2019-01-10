@@ -44,7 +44,7 @@ app.post('/', (req, res) => {
         printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.drawLine();
+        printLines();
 
         let invoice_type = "BOLETA"
         if (body.enterprise_client_id !== "0") {
@@ -59,19 +59,19 @@ app.post('/', (req, res) => {
         printer.alignLeft();
         printer.println(`FECHA EMISION: ${body.buy_date}`);
         printer.println(`ATENDIDO POR : ${body.seller}`);
-        printer.drawLine();
+        printLines();
         if (body.enterprise_client_id !== "0") {
             printer.println(`RAZÓN SOCIAL: ${body.enterprise_client}`);
             printer.println(`RUC         : ${body.enterprise_client_id}`);
         }
         printer.println(`DOC PASAJERO: ${body.dni}`);
         printer.println(`PASAJERO    : ${body.passenger_name}`);
-        printer.drawLine();
+        printLines();
         printer.alignCenter();
         printer.bold(true);
         printer.println(`DATOS DEL VIAJE`);
         printer.bold(false);
-        printer.drawLine();
+        printLines();
         printer.alignLeft();
         //printer.setTextDoubleHeight();                      // Set text to double height
         printer.setTextDoubleWidth();
@@ -83,14 +83,14 @@ app.post('/', (req, res) => {
         printer.println(`IMPORTE    : S/ ${body.total}`);
         printer.setTextNormal();
 
-        printer.drawLine();
+        printLines();
         printer.alignCenter();
         printer.println(`SON: ${body.total_letter}`);
         printer.alignLeft();
 
-        printer.drawLine(); //----------------------------------
+        printLines(); //----------------------------------
         printer.println(`FORMA DE PAGO: ${body.payment_type}`);
-        printer.drawLine(); //----------------------------------
+        printLines(); //----------------------------------
 
         printer.alignCenter();
         printer.printQR(`${body.ticket_id}`)
@@ -127,7 +127,7 @@ app.post('/credit-note', (req, res) => {
         printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.drawLine();
+        printLines();
         printer.println("NOTA DE CRÉDITO");
         printer.setTextDoubleHeight();
         printer.setTextDoubleWidth();
@@ -151,4 +151,14 @@ app.get('/', (req, res) => {
     res.send("HELLO FRIEND")
 })
 
+function printLines(){
+    let paperWidth = print.getWidth();
+    let lines = "";
+    for(let i = 1; i <= paperWidth; i++){
+        lines += '-';
+    }
+    return lines;
+}
+
 app.listen(3030, () => console.log(`El servidor de impresión está listo en el puerto 3030`))
+0
