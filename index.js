@@ -152,7 +152,7 @@ app.get('/', (req, res) => {
 })
 
 function printLines(){
-    let paperWidth = print.getWidth();
+    let paperWidth = printer.getWidth();
     let lines = "";
     for(let i = 1; i <= paperWidth; i++){
         lines += '-';
