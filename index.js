@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cors())
 const jsonParser = bodyParser.json()
-console.log(m_printer.getDefaultPrinterName())
+console.log(`La actual impresora por defecto es ${m_printer.getDefaultPrinterName()}`)
 const default_printer = m_printer.getDefaultPrinterName();
 
 printer.init({
@@ -24,7 +24,7 @@ printer.init({
 });
 
 printer.isPrinterConnected(function (isConnected) {
-    console.log(`Is the printer connected? ${isConnected}`);
+    console.log(`La impresora está conectada? ${isConnected}`);
 });
 
 app.post('/', (req, res) => {
@@ -33,7 +33,6 @@ app.post('/', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
-    console.log();
 
     printer.alignCenter();
     printer.printImage('./logo.png', function (done) {
@@ -117,7 +116,6 @@ app.post('/credit-note', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
-    console.log();
 
     printer.alignCenter();
     printer.printImage('./logo.png', function (done) {
@@ -141,7 +139,7 @@ app.post('/credit-note', (req, res) => {
             if (err) {
                 console.error(`Print failed`, err);
             } else {
-                console.log(`Print done`);
+                console.log(`Impreso correctamente`);
             }
         });
         res.send('<h1>PRINTED TICKET</h1>')
@@ -153,4 +151,4 @@ app.get('/', (req, res) => {
     res.send("HELLO FRIEND")
 })
 
-app.listen(3030, () => console.log(`Example app listening on port 3030`))
+app.listen(3030, () => console.log(`El servidor de impresión está listo en el puerto 3030`))
