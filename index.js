@@ -165,11 +165,9 @@ app.get('/', (req, res) => {
 function printLines(){
     let paperWidth = printer.getWidth();
     let lines = "";
-    console.log(paperWidth);
     for(let i = 1; i <= paperWidth; i++){
         lines += '-';
     }
-    console.log(lines);
     return lines;
 }
 
