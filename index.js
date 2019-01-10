@@ -27,6 +27,17 @@ printer.isPrinterConnected(function (isConnected) {
     console.log(`La impresora está conectada? ${isConnected}`);
 });
 
+function printLines(){
+    let paperWidth = printer.getWidth();
+    let lines = "";
+    console.log(paperWidth);
+    for(let i = 1; i <= paperWidth; i++){
+        lines += '-';
+    }
+    console.log(lines);
+    return lines;
+}
+
 app.post('/', (req, res) => {
     console.log(req.body);
     let body = req.body;
@@ -44,7 +55,7 @@ app.post('/', (req, res) => {
         printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printLines();
+        printer.println(printLines());
 
         let invoice_type = "BOLETA"
         if (body.enterprise_client_id !== "0") {
@@ -59,19 +70,19 @@ app.post('/', (req, res) => {
         printer.alignLeft();
         printer.println(`FECHA EMISION: ${body.buy_date}`);
         printer.println(`ATENDIDO POR : ${body.seller}`);
-        printLines();
+        printer.println(printLines());
         if (body.enterprise_client_id !== "0") {
             printer.println(`RAZÓN SOCIAL: ${body.enterprise_client}`);
             printer.println(`RUC         : ${body.enterprise_client_id}`);
         }
         printer.println(`DOC PASAJERO: ${body.dni}`);
         printer.println(`PASAJERO    : ${body.passenger_name}`);
-        printLines();
+        printer.println(printLines());
         printer.alignCenter();
         printer.bold(true);
         printer.println(`DATOS DEL VIAJE`);
         printer.bold(false);
-        printLines();
+        printer.println(printLines());
         printer.alignLeft();
         //printer.setTextDoubleHeight();                      // Set text to double height
         printer.setTextDoubleWidth();
@@ -83,14 +94,14 @@ app.post('/', (req, res) => {
         printer.println(`IMPORTE    : S/ ${body.total}`);
         printer.setTextNormal();
 
-        printLines();
+        printer.println(printLines());
         printer.alignCenter();
         printer.println(`SON: ${body.total_letter}`);
         printer.alignLeft();
 
-        printLines(); //----------------------------------
+        printer.println(printLines()); //----------------------------------
         printer.println(`FORMA DE PAGO: ${body.payment_type}`);
-        printLines(); //----------------------------------
+        printer.println(printLines()); //----------------------------------
 
         printer.alignCenter();
         printer.printQR(`${body.ticket_id}`)
@@ -154,9 +165,11 @@ app.get('/', (req, res) => {
 function printLines(){
     let paperWidth = printer.getWidth();
     let lines = "";
+    console.log(paperWidth);
     for(let i = 1; i <= paperWidth; i++){
         lines += '-';
     }
+    console.log(lines);
     return lines;
 }
 
