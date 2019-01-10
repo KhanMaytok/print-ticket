@@ -171,5 +171,5 @@ function printLines(){
     return lines;
 }
 
-app.listen(3030, () => console.log(`El servidor de impresión está listo en el puerto 3030`))
+app.listen(3030, () => console.log(`El servidor de impresión está listo en el puerto 3030. Por favor, no cierres esta ventana durante el proceso de impresión`))
 0
