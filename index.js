@@ -53,7 +53,7 @@ app.post('/', (req, res) => {
         printer.println(`${body.enterprise_name}`);
         printer.bold(false)
         printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
-        printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
+        printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(printLines());
 
