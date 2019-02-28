@@ -49,6 +49,7 @@ app.post('/', (req, res) => {
     printer.printImage('./logo.png', function (done) {
         printer.println(" ")
         printer.println(" ")
+        printer.alignCenter();
         printer.bold(true)
         printer.println(`${body.enterprise_name}`);
         printer.bold(false)
@@ -92,7 +93,8 @@ app.post('/', (req, res) => {
         printer.println(`ORIGEN     : ${body.departure}`);
         printer.println(`DESTINO    : ${body.arrival}`);
         printer.println(`FECHA VIAJE: ${body.departure_date}`);
-        printer.println(`HORA VIAJE : ${body.departure_hour}`);
+        printer.println(`HORA VIAJE : ${body.schedule_hour}`);
+        printer.println(`EMBARQUE   : ${body.departure_hour}`);
         printer.println(`ASIENTO    : ${body.seat}`);
         printer.println(`IMPORTE    : S/ ${body.total}`);
         printer.setTextNormal();
