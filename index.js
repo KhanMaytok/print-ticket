@@ -53,7 +53,7 @@ app.post('/', (req, res) => {
         printer.bold(true)
         printer.println(`${body.enterprise_name}`);
         printer.bold(false)
-        printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
+        printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(printLines());
@@ -112,7 +112,7 @@ app.post('/', (req, res) => {
         printer.printQR(`${body.ticket_id}`)
 
         printer.println(`Estimado usuario, verifique las condiciones generales del servicio en nuestra página web www.angeldivino.com.pe`);
-        printer.println(`Este boleto se puede canjear por un comprobante electrónico en: https://angeldivino.com/mis-comprobantes/`)
+        printer.println(`Este boleto se puede canjear por un comprobante electrónico en: https://${body.enterprise_client_web}/mis-comprobantes/`)
         printer.partialCut();
         printer.execute(function (err) {
             if (err) {
@@ -140,7 +140,7 @@ app.post('/credit-note', (req, res) => {
         printer.bold(true)
         printer.println(`${body.enterprise_name}`);
         printer.bold(false)
-        printer.println('AV. JORGE CHAVEZ N° 1365 URB. CAMPODONICO –   CHICLAYO – LAMBAYEQUE')
+        printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printLines();
