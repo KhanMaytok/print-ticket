@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 require('dotenv').config()
+const client_data = require('./additional_data.js');
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -14,7 +15,8 @@ const jsonParser = bodyParser.json()
 console.log(`La actual impresora por defecto es ${m_printer.getDefaultPrinterName()}`)
 const default_printer = m_printer.getDefaultPrinterName();
 
-bottom_text = process.env.BOTTOM_TEXT == 'false' ? false : true
+const { version } = require('./package.json');
+console.log(version)
 
 printer.init({
     type: 'epson', // Printer type: 'star' or 'epson'
@@ -115,10 +117,8 @@ app.post('/', (req, res) => {
         printer.alignCenter();
         printer.printQR(`${body.ticket_id}`)
 
-        printer.println(`Estimado usuario, verifique las condiciones generales del servicio en nuestra página web www.angeldivino.com.pe`);
-        printer.println(`Este boleto se puede canjear por un comprobante electrónico en: https://${body.enterprise_client_web}/mis-comprobantes/`)
-        if(bottom_text === true){
-            printer.println(additional_data.bottom_text)
+        if(client_data.client_data.print_bottom === true){
+            printer.println(client_data.client_data.bottom_text)
         }
         printer.partialCut();
         printer.execute(function (err) {
@@ -184,16 +184,3 @@ function printLines(){
 }
 
 app.listen(3030, () => console.log(`El servidor de impresión está listo en el puerto 3030. Por favor, no cierres esta ventana durante el proceso de impresión`))
-
-
-const additional_data = {
-    bottom_text: `Sr. Pasajero: 
-    1. Revise su boleto antes de retirarse. No se aceptan reclamos posteriores.
-    2. Las postergaciones se hacen con 4 horas de anticipacion presentando su boleto en oficinas personalmente.
-    3. Portar maletas de uso personal. Libre 20 lilos de equipaje. Todo exceso se pagara una tarifa de acuerdo a la empresa.
-    4. La empresa no se responsabiliza por deterioro del equipaje debido al mal embalaje. 
-    5. Prohibido transportar animales vivos, liquido y/o productos inflamables.
-    6. El pasajero que no se presenta a la hora indicada perderá el valor íntegro del boleto. 
-    8. La empresa no se responsabiliza por maletas, paquetes y bulto que contenga dinero, alhajas y objetos de valor que no hubiesen sido declarados previamente.
-    9. En caso de perdida de un bulto de equipaje siempre que esté amparado por el comprobante respectivo, la empresa solo abonara el máximo de cincuenta soles(s/.50) de acuerdo con los articulos 105 al 190 de R.G de ff.cc.`
-}
