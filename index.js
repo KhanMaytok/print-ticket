@@ -4,6 +4,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
+require('dotenv').config()
+import additional_data from './additional_data'
+
+
 app.use(bodyParser.urlencoded({
     extended: true
 }))
@@ -11,6 +15,8 @@ app.use(cors())
 const jsonParser = bodyParser.json()
 console.log(`La actual impresora por defecto es ${m_printer.getDefaultPrinterName()}`)
 const default_printer = m_printer.getDefaultPrinterName();
+
+bottom_text = process.env.BOTTOM_TEXT == 'false' ? false : true
 
 printer.init({
     type: 'epson', // Printer type: 'star' or 'epson'
@@ -113,6 +119,9 @@ app.post('/', (req, res) => {
 
         printer.println(`Estimado usuario, verifique las condiciones generales del servicio en nuestra página web www.angeldivino.com.pe`);
         printer.println(`Este boleto se puede canjear por un comprobante electrónico en: https://${body.enterprise_client_web}/mis-comprobantes/`)
+        if(bottom_text === true){
+            printer.println(additional_data.bottom_text)
+        }
         printer.partialCut();
         printer.execute(function (err) {
             if (err) {
