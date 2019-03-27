@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 require('dotenv').config()
-import additional_data from './additional_data'
+const additional_data = require('./additional_data')
 
 
 app.use(bodyParser.urlencoded({
