@@ -48,7 +48,7 @@ app.post('/', (req, res) => {
         body = JSON.parse(body);
     }
 
-    for(i in range(range_lenght)){
+    for(let i in range(range_lenght)){
         printer.printImage('./logo.png', function (done) {
             printer.println(" ")
             printer.println(" ")
