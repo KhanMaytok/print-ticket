@@ -1,5 +1,8 @@
 @echo off
 
+echo "CERRANDO OTROS PROCESOS DE IMPRESIÓN"
+taskkill /im node.exe
+
 echo "COMPROBANDO ACTUALIZACIONES"
 call git stash
 call git pull origin master
