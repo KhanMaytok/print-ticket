@@ -1,7 +1,7 @@
 @echo off
 
 echo "CERRANDO OTROS PROCESOS DE IMPRESIÓN"
-taskkill /im /f node.exe
+taskkill /f /im node.exe
 echo "ACTUALIZANDO..."
 call git stash
 call git pull origin master
