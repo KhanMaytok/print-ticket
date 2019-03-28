@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const client_data = require('./additional_data.js');
+const fs = require('fs')
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -13,6 +14,21 @@ app.use(cors())
 const jsonParser = bodyParser.json()
 console.log(`La actual impresora por defecto es ${m_printer.getDefaultPrinterName()}`)
 const default_printer = m_printer.getDefaultPrinterName();
+
+console.log('COPIANDO TEMPLATE SI NO EXISTE')
+const path = './additional_data.js'
+
+try {
+  if (fs.existsSync(path)) {
+    console.log('EL ARCHIVO DE DATOS ADICIONALES YA EXISTE. TODO BIEN')
+  }
+} catch(err) {
+    fs.copyFile('./additional_data.js.template', './additional_data.js', (err) => {
+        if (err) throw err;
+        console.log('source.txt was copied to destination.txt');
+    });
+}
+
 
 printer.init({
     type: 'epson', // Printer type: 'star' or 'epson'
