@@ -1,4 +1,8 @@
 @echo off
+
+echo "COMPROBANDO ACTUALIZACIONES"
+call git pull origin master
+call npm install
 call nodemon index.js
 
 echo " _____       _      _           _       "

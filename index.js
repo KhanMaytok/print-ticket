@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const client_data = require('./additional_data.js');
-const range_lenght = parseInt(client_data.client_data.print_count);
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -47,9 +46,7 @@ app.post('/', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
-
-    for(let i in range(range_lenght)){
-        printer.printImage('./logo.png', function (done) {
+    printer.printImage('./logo.png', function (done) {
             printer.println(" ")
             printer.println(" ")
             printer.alignCenter();
@@ -126,8 +123,8 @@ app.post('/', (req, res) => {
                 }
             });
             res.send('<h1>UNO SAN</h1>')
-        });
-    }
+    });
+
 })
 
 app.post('/credit-note', (req, res) => {

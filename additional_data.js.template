@@ -1,5 +1,4 @@
 const client_data = {
-  print_count: 1,
   print_bottom: false,
   bottom_text: `Sr. Pasajero: 
   1. Revise su boleto antes de retirarse. No se aceptan reclamos posteriores.
