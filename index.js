@@ -29,6 +29,8 @@ try {
     });
 }
 
+let logo = getLogo();
+
 
 printer.init({
     type: 'epson', // Printer type: 'star' or 'epson'
@@ -62,7 +64,7 @@ app.post('/', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
-    printer.printImage('./logo.png', function (done) {
+    printer.printImage(logo, function (done) {
             printer.println(" ")
             printer.println(" ")
             printer.alignCenter();
@@ -218,3 +220,13 @@ function range(start, stop, step) {
 
     return result;
 };
+
+function getLogo(){
+    try {
+        if (fs.existsSync('./custom_logo.png')) {
+          return './custom_logo.png'
+        }
+    } catch(err) {
+        return './logo.png'
+    }    
+}
