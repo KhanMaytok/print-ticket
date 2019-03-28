@@ -1,6 +1,7 @@
 @echo off
 
 echo "COMPROBANDO ACTUALIZACIONES"
+call git stash
 call git pull origin master
 call npm install
 call nodemon index.js
