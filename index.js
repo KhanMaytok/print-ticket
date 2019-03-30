@@ -15,16 +15,15 @@ console.log(`La actual impresora por defecto es ${m_printer.getDefaultPrinterNam
 const default_printer = m_printer.getDefaultPrinterName();
 
 console.log('COPIANDO TEMPLATE SI NO EXISTE')
-const path = './additional_data.js'
 
-try {
-  if (fs.existsSync(path)) {
+
+  if (fs.existsSync('./additional_data.js')) {
     console.log('EL ARCHIVO DE DATOS ADICIONALES YA EXISTE. TODO BIEN')
-  }
-} catch(err) {
-    console.log('EL ARCHIV O NO EXISTE. COPIANDO DESDE EL TEMPLATE')
+  }else{
+    console.log('EL ARCHIVO NO EXISTE. COPIANDO DESDE EL TEMPLATE')
     fs.copyFileSync('./additional_data.js.template', './additional_data.js');
-}
+  }
+
 const client_data = require('./additional_data.js');
 
 let logo = getLogo();
