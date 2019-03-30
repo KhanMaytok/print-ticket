@@ -4,7 +4,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
-const client_data = require('./additional_data.js');
 const fs = require('fs')
 
 app.use(bodyParser.urlencoded({
@@ -28,6 +27,7 @@ try {
         console.log('source.txt was copied to destination.txt');
     });
 }
+const client_data = require('./additional_data.js');
 
 let logo = getLogo();
 
