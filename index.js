@@ -22,6 +22,7 @@ try {
     console.log('EL ARCHIVO DE DATOS ADICIONALES YA EXISTE. TODO BIEN')
   }
 } catch(err) {
+    console.log('EL ARCHIV O NO EXISTE. COPIANDO DESDE EL TEMPLATE')
     fs.copyFileSync('./additional_data.js.template', './additional_data.js');
 }
 const client_data = require('./additional_data.js');
