@@ -229,6 +229,8 @@ app.post('/encomiendas/', (req, res) => {
 			}
 			
 			printer.println(printLines());
+			printer.println(`REMITENTE         : ${body.sender}`);
+			printer.println(`RECEPTOR          : ${body.receiver}`);
 			printer.println(printLines());
 			printer.alignLeft();
 			printer.println(`ITEMS        :`);
