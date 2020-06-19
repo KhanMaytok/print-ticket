@@ -229,7 +229,16 @@ app.post('/encomiendas/', (req, res) => {
 			}
 			
 			printer.println(printLines());
+			if('sender_2' in body){
+				printer.println(`MENSAJERO         : ${body.sender_2}`);
+			}
+			printer.println(printLines());
 			printer.println(`REMITENTE         : ${body.sender}`);
+			printer.println(printLines());
+			if('receiver_2' in body){
+				printer.println(`CONSIGNADO        : ${body.receiver_2}`);
+			}
+			printer.println(printLines());
 			printer.println(`RECEPTOR          : ${body.receiver}`);
 			printer.println(printLines());
 			printer.alignLeft();
