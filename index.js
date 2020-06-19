@@ -218,7 +218,7 @@ app.post('/encomiendas/', (req, res) => {
 			printer.alignLeft();
 			printer.println(`FECHA EMISION     : ${body.created_at}`);
 			printer.println(`ATENDIDO POR      : ${body.seller}`);
-			printer.println(printLines());
+			printer.println(printLines()); //------------------------------------------
 			if (parseInt(body.document_type) === 6) {
 				printer.println(`RUC         : ${body.dni}`);
 				printer.println(`RAZÓN SOCIAL: ${body.customer}`);
@@ -228,26 +228,26 @@ app.post('/encomiendas/', (req, res) => {
 				printer.println(`CLIENTE       : ${body.customer}`);
 			}
 			
-			printer.println(printLines());
+			printer.println(printLines()); //------------------------------------------
 			if('sender_2' in body){
 				printer.println(`MENSAJERO         : ${body.sender_2}`);
 			}
-			printer.println(printLines());
+			printer.println(printLines()); //------------------------------------------
 			printer.println(`REMITENTE         : ${body.sender}`);
 			printer.println(printLines());
 			if('receiver_2' in body){
 				printer.println(`CONSIGNADO        : ${body.receiver_2}`);
 			}
-			printer.println(printLines());
+			printer.println(printLines()); //------------------------------------------
 			printer.println(`RECEPTOR          : ${body.receiver}`);
-			printer.println(printLines());
+			printer.println(printLines()); //------------------------------------------
 			printer.alignLeft();
 			printer.println(`ITEMS        :`);
 			body.items.map(function (e) {
 				printer.table([e.quantity, e.name, e.total]);
 			})
 
-			printer.println(printLines());
+			printer.println(printLines()); //------------------------------------------
 			printer.alignCenter();
 
 			let letras = numeroALetras(parseFloat(body.total), {
