@@ -209,6 +209,9 @@ app.post('/encomiendas/', (req, res) => {
 			if (parseInt(body.document_type) === 6) {
 				invoice_type = "FACTURA ELECTRÓNICA";
 			}
+			if(body.serie.startsWith('V')){
+				invoice_type = "CONSTANCIA DE VENTA"
+			}
 
 			printer.println(`${invoice_type}`);
 			printer.setTextDoubleHeight();
@@ -219,29 +222,36 @@ app.post('/encomiendas/', (req, res) => {
 			printer.println(`FECHA EMISION     : ${body.created_at}`);
 			printer.println(`ATENDIDO POR      : ${body.seller}`);
 			printer.println(printLines()); //------------------------------------------
-			if (parseInt(body.document_type) === 6) {
-				printer.println(`RUC         : ${body.dni}`);
-				printer.println(`RAZÓN SOCIAL: ${body.customer}`);
-				
-			}else{
-				printer.println(`DNI           : ${body.dni}`);
-				printer.println(`CLIENTE       : ${body.customer}`);
-			}
-			
+			printer.alignCenter();
+			printer.println(`DATOS DE ENVIO`);
+			printer.alignLeft();
+			// MENSAJERO
 			printer.println(printLines()); //------------------------------------------
 			if('sender_2' in body){
 				printer.println(`MENSAJERO         : ${body.sender_2}`);
+				printer.println(`DNI               : ${body.sender_2_id}`);
 			}
+
+			// REMITENTE
 			printer.println(printLines()); //------------------------------------------
 			printer.println(`REMITENTE         : ${body.sender}`);
-			printer.println(printLines());
+			printer.println(`DNI/RUC           : ${body.sender_id}`);			
+
+			// CONSIGNADO
+			printer.println(printLines()); //------------------------------------------
+			printer.println(`CONSIGNADO        : ${body.receiver}`);
+			printer.println(`DNI/RUC           : ${body.receiver_id}`);
+			
+			// CONSIGNADO 2
+			printer.println(printLines()); //------------------------------------------
 			if('receiver_2' in body){
 				printer.println(`CONSIGNADO        : ${body.receiver_2}`);
+				printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
 			}
 			printer.println(printLines()); //------------------------------------------
-			printer.println(`RECEPTOR          : ${body.receiver}`);
-			printer.println(printLines()); //------------------------------------------
-			printer.alignLeft();
+			printer.println(`TIPO              : ENCOMIENDA`);
+			printer.println(`ORIGEN            : ${body.departure}`);
+			printer.println(`DESTINO           : ${body.arrival}`);
 			printer.println(`ITEMS        :`);
 			body.items.map(function (e) {
 				printer.table([e.quantity, e.name, e.total]);
