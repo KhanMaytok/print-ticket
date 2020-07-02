@@ -121,7 +121,10 @@ app.post('/', (req, res) => {
 			printer.alignLeft();
 
 			printer.println(printLines()); //----------------------------------
+			printer.setTextDoubleHeight();
+			printer.setTextDoubleWidth();
 			printer.println(`FORMA DE PAGO: ${body.payment_type}`);
+			printer.setTextNormal();
 			printer.println(printLines()); //----------------------------------
 
 			printer.alignCenter();
