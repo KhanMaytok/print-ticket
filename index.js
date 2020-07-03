@@ -121,10 +121,9 @@ app.post('/', (req, res) => {
 			printer.alignLeft();
 
 			printer.println(printLines()); //----------------------------------
-			printer.setTextDoubleHeight();
-			printer.setTextDoubleWidth();
+			printer.bold(true);
 			printer.println(`FORMA DE PAGO: ${body.payment_type}`);
-			printer.setTextNormal();
+			printer.bold(false);
 			printer.println(printLines()); //----------------------------------
 
 			printer.alignCenter();
@@ -274,7 +273,9 @@ app.post('/encomiendas/', (req, res) => {
 			printer.alignLeft();
 
 			printer.println(printLines()); //----------------------------------
+			printer.bold(true);
 			printer.println(`FORMA DE PAGO: ${body.payment_type}`);
+			printer.bold(false);
 			printer.println(printLines()); //----------------------------------
 
 			printer.alignCenter();
