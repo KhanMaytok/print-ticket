@@ -207,6 +207,8 @@ app.post('/encomiendas/', (req, res) => {
 			printer.println(`R.U.C. 20395419715`);
 			printer.println(printLines());
 
+			let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
+
 			let invoice_type = "BOLETA ELECTRÓNICA"
 			if (parseInt(body.document_type) === 6) {
 				invoice_type = "FACTURA ELECTRÓNICA";
@@ -253,7 +255,7 @@ app.post('/encomiendas/', (req, res) => {
 			printer.println(printLines()); //------------------------------------------
 			printer.println(`TIPO              : ENCOMIENDA`);
 			printer.println(`ORIGEN            : ${body.departure}`);
-			printer.println(`DESTINO           : ${body.arrival}`);
+			printer.println(`DESTINO           : ${arrival}`);
 			printer.println(`ITEMS        :`);
 			body.items.map(function (e) {
 				printer.table([e.quantity, e.name, e.total]);
