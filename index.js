@@ -152,6 +152,12 @@ app.post('/credit-note', (req, res) => {
 		body = JSON.parse(body);
 	}
 
+	console.log(body);
+
+	if('credit_note' in body){
+		body = body.credit_note;
+	}
+
 	printer.alignCenter();
 	printer.printImage('./logo.png', function (done) {
 		printer.println(" ")
