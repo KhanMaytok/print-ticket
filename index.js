@@ -268,6 +268,10 @@ app.post('/encomiendas/', (req, res) => {
 			})
 
 			printer.println(printLines()); //------------------------------------------
+			printer.println(`SUBTOTAL            : ${body.total}`);
+			printer.println(`TOTAL            : ${body.subtotal}`);
+			printer.println(`IGV            : ${body.igv}`);
+			printer.println(printLines()); //------------------------------------------
 			printer.alignCenter();
 
 			let letras = numeroALetras(parseFloat(body.total), {
