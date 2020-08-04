@@ -267,10 +267,12 @@ app.post('/encomiendas/', (req, res) => {
 				printer.table([e.quantity, e.name, e.total]);
 			})
 
-			printer.println(printLines()); //------------------------------------------
-			printer.println(`SUBTOTAL            : ${body.total}`);
-			printer.println(`TOTAL            : ${body.subtotal}`);
-			printer.println(`IGV            : ${body.igv}`);
+			printer.println(printLines()); //------------------------------------------			
+			if (parseInt(body.document_type) === 6) {
+				printer.println(`SUBTOTAL            : ${body.subtotal}`);			
+				printer.println(`IGV            : ${body.igv}`);
+			}
+			printer.println(`TOTAL            : ${body.total}`);
 			printer.println(printLines()); //------------------------------------------
 			printer.alignCenter();
 
