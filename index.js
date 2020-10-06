@@ -192,6 +192,72 @@ app.get('/', (req, res) => {
 	res.send("HELLO FRIEND")
 })
 
+app.post('/money-transfer/', (req, res) => {
+	let body = req.body;
+	console.log(body);
+	if (typeof (body) === "string") {
+		body = JSON.parse(body);
+	}
+
+	printer.printImage(logo, function (done) {
+		body = body.transfer
+		console.log(body.items);
+		printer.println(" ")
+		printer.println(" ")
+		printer.alignCenter();
+		printer.bold(true)
+		printer.println(`TOURS ANGEL DIVINO SAC`);
+		printer.bold(false)
+		printer.println(`Av. Jorge Chavez Nro. 1365`)
+		printer.println(`PUNTO DE EMISIÓN: ${body.current_agency}`)
+		printer.println(`R.U.C. 20395419715`);
+		printer.println(printLines());
+
+		printer.println('GIRO - TRANSFERENCIA DE DINERO');
+		printer.setTextDoubleHeight();
+		printer.setTextDoubleWidth();
+		printer.println(`${body.serie}`);
+		printer.setTextNormal();
+		printer.alignLeft();
+		printer.println(`FECHA EMISION     : ${body.current_day}`);
+		printer.println(`ATENDIDO POR      : ${body.seller}`);
+		printer.println(printLines()); //------------------------------------------
+		printer.alignCenter();
+		printer.println(`DATOS DEL GIRO`);
+		printer.alignLeft();
+		// MENSAJERO
+		printer.println(printLines()); //------------------------------------------
+		printer.println(`ENVIA             : ${body.sender}`);
+		printer.println(`DNI               : ${body.sender_id}`);
+		// REMITENTE
+		printer.println(printLines()); //------------------------------------------
+		printer.println(`RECIBE            : ${body.receiver}`);
+		printer.println(`DNI               : ${body.receiver_id}`);
+		printer.println(printLines()); //------------------------------------------
+		printer.bold(true);
+		printer.println(`MONTO DE ENVIO  : S/. ${parseFloat(body.subtotal).toFixed(2)}`);
+		printer.println(`COMISION        : S/. ${parseFloat(body.commission).toFixed(2)}`);
+		printer.println(`TOTAL A COBRAR  : S/. ${parseFloat(body.total).toFixed(2)}`);
+		printer.bold(false);
+
+		if(client_data.client_data.print_bottom === true){
+			printer.println(client_data.client_data.bottom_text)
+		}
+
+		printer.partialCut();
+		printer.execute(function (err) {
+			if (err) {
+				console.error(`Print failed`, err);
+			} else {
+				console.log(`Print done`);
+			}
+		});
+		res.send('<h1>UNO SAN</h1>')
+});
+
+
+})
+
 
 app.post('/encomiendas/', (req, res) => {
 	let body = req.body;
