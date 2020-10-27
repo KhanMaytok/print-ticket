@@ -234,6 +234,9 @@ app.post('/money-transfer/', (req, res) => {
 		printer.println(`RECIBE            : ${body.receiver}`);
 		printer.println(`DNI               : ${body.receiver_id}`);
 		printer.println(printLines()); //------------------------------------------
+		printer.println(`ORIGEN            : ${body.departure}`);
+		printer.println(`DESTINO           : ${body.arrival}`);
+		printer.println(printLines()); //------------------------------------------
 		printer.bold(true);
 		printer.println(`MONTO DE ENVIO  : S/. ${parseFloat(body.subtotal).toFixed(2)}`);
 		printer.println(`COMISION        : S/. ${parseFloat(body.commission).toFixed(2)}`);
