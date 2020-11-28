@@ -10,9 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4",
-    "node-thermal-printer": "github:khanmaytok/node-thermal-printer#find-codepage-automatically-iconv",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-thermal-printer": "^4.1.2",
     "printer": "^0.2.2"
   }
 }

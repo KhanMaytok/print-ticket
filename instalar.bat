@@ -1,4 +1,5 @@
 @echo off
+rmdir /Q/S node_modules
 git init
 git remote add origin https://github.com/KhanMaytok/print-ticket.git
 git add --all
