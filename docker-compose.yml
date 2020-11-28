@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  printer:
+    restart: always
+    build: ./
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./:/usr/src/app
+    command: nodemon index.js

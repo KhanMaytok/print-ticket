@@ -216,7 +216,7 @@ app.post('/money-transfer/', (req, res) => {
 		printer.println('GIRO - TRANSFERENCIA DE DINERO');
 		printer.setTextDoubleHeight();
 		printer.setTextDoubleWidth();
-		printer.println(`${body.serie}`);
+		printer.println(`${body.serie}-${body.number}`);
 		printer.setTextNormal();
 		printer.alignLeft();
 		printer.println(`FECHA EMISION     : ${body.current_day}`);
