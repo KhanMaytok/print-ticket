@@ -1,11 +1,16 @@
 const m_printer = require('printer')
-const printer = require('node-thermal-printer')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const fs = require('fs')
-const numeroALetras = require('./numeroALetra')
+const numeroALetras = require('./NumeroALetra')
+
+const ThermalPrinter = require("node-thermal-printer").printer;
+const PrinterTypes = require("node-thermal-printer").types;
+
+const VARIOS = 'VARIOS';
+const ZERO = '0';
 
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -30,19 +35,13 @@ const client_data = require('./additional_data.js');
 let logo = getLogo();
 
 
-printer.init({
-	type: 'epson', // Printer type: 'star' or 'epson'
-	interface: `printer:${default_printer}`, // Printer interface
-	characterSet: 'CHARCODE_SPAIN1', // Printer character set
-	removeSpecialCharacters: false, // Removes special characters - default: false
-	replaceSpecialCharacters: true, // Replaces special characters listed in config files - default: true
-	extraSpecialCharacters: {
-		'£': 163
-	} // Adds additional special characters to those listed in the config files
-});
-
-printer.isPrinterConnected(function (isConnected) {
-	console.log(`La impresora está conectada? ${isConnected}`);
+let printer = new ThermalPrinter({
+    type: PrinterTypes.EPSON,
+    interface: `printer:${default_printer}`, 
+    driver: require('printer'),
+    options:{
+      timeout: 5000
+    }
 });
 
 function printLines(){
@@ -199,7 +198,9 @@ app.post('/money-transfer/', (req, res) => {
 		body = JSON.parse(body);
 	}
 
-	printer.printImage(logo, function (done) {
+	console.log('The logo is ', logo);
+
+	printer.printImage(logo).then(function (done) {
 		body = body.transfer
 		console.log(body.items);
 		printer.println(" ")
@@ -420,7 +421,10 @@ function getLogo(){
 		if (fs.existsSync('./custom_logo.png')) {
 		  return './custom_logo.png'
 		}
+		else{
+			return './logo.png';
+		}
 	} catch(err) {
-		return './logo.png'
+		return './logo.png';
 	}    
 }
