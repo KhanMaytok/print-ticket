@@ -139,6 +139,7 @@ app.post('/', (req, res) => {
 					console.log(`Print done`);
 				}
 			});
+			printer.clear();
 			res.send('<h1>UNO SAN</h1>')
 	});
 
@@ -182,6 +183,7 @@ app.post('/credit-note', (req, res) => {
 				console.log(`Impreso correctamente`);
 			}
 		});
+		printer.clear();
 		res.send('<h1>PRINTED TICKET</h1>')
 	})
 })
@@ -202,7 +204,6 @@ app.post('/money-transfer/', (req, res) => {
 
 	printer.printImage(logo).then(function (done) {
 		body = body.transfer
-		console.log(body.items);
 		printer.println(" ")
 		printer.println(" ")
 		printer.alignCenter();
@@ -256,10 +257,10 @@ app.post('/money-transfer/', (req, res) => {
 				console.log(`Print done`);
 			}
 		});
+		printer.clear();
 		res.send('<h1>UNO SAN</h1>')
-});
-
-
+	});
+	//res.send('<h1>UNO SAN</h1>')
 })
 
 
@@ -270,115 +271,109 @@ app.post('/encomiendas/', (req, res) => {
 		body = JSON.parse(body);
 	}
 	printer.printImage(logo, function (done) {
-			body = body.invoice
-			console.log(body.items);
-			printer.println(" ")
-			printer.println(" ")
-			printer.alignCenter();
-			printer.bold(true)
-			printer.println(`TOURS ANGEL DIVINO SAC`);
-			printer.bold(false)
-			printer.println(`Av. Jorge Chavez Nro. 1365`)
-			printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
-			printer.println(`R.U.C. 20395419715`);
-			printer.println(printLines());
+		body = body.invoice
+		console.log(body.items);
+		printer.println(" ")
+		printer.println(" ")
+		printer.alignCenter();
+		printer.bold(true)
+		printer.println(`TOURS ANGEL DIVINO SAC`);
+		printer.bold(false)
+		printer.println(`Av. Jorge Chavez Nro. 1365`)
+		printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
+		printer.println(`R.U.C. 20395419715`);
+		printer.println(printLines());
+		let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
 
-			let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
+		let invoice_type = "BOLETA ELECTRÓNICA"
+		if (parseInt(body.document_type) === 6) {
+			invoice_type = "FACTURA ELECTRÓNICA";
+		}
+		if(body.serie.startsWith('V')){
+			invoice_type = "CONSTANCIA DE VENTA"
+		}
 
-			let invoice_type = "BOLETA ELECTRÓNICA"
-			if (parseInt(body.document_type) === 6) {
-				invoice_type = "FACTURA ELECTRÓNICA";
-			}
-			if(body.serie.startsWith('V')){
-				invoice_type = "CONSTANCIA DE VENTA"
-			}
+		printer.println(`${invoice_type}`);
+		printer.setTextDoubleHeight();
+		printer.setTextDoubleWidth();
+		printer.println(`${body.serie}`);
+		printer.setTextNormal();
+		printer.alignLeft();
+		printer.println(`FECHA EMISION     : ${body.created_at}`);
+		printer.println(`ATENDIDO POR      : ${body.seller}`);
+		printer.println(printLines()); //------------------------------------------
+		printer.alignCenter();
+		printer.println(`DATOS DE ENVIO`);
+		printer.alignLeft();
+		// MENSAJERO
+		printer.println(printLines()); //------------------------------------------
+		if('sender_2' in body){
+			printer.println(`MENSAJERO         : ${body.sender_2}`);
+			printer.println(`DNI               : ${body.sender_2_id}`);
+		}
 
-			printer.println(`${invoice_type}`);
-			printer.setTextDoubleHeight();
-			printer.setTextDoubleWidth();
-			printer.println(`${body.serie}`);
-			printer.setTextNormal();
-			printer.alignLeft();
-			printer.println(`FECHA EMISION     : ${body.created_at}`);
-			printer.println(`ATENDIDO POR      : ${body.seller}`);
-			printer.println(printLines()); //------------------------------------------
-			printer.alignCenter();
-			printer.println(`DATOS DE ENVIO`);
-			printer.alignLeft();
-			// MENSAJERO
-			printer.println(printLines()); //------------------------------------------
-			if('sender_2' in body){
-				printer.println(`MENSAJERO         : ${body.sender_2}`);
-				printer.println(`DNI               : ${body.sender_2_id}`);
-			}
-
-			// REMITENTE
-			printer.println(printLines()); //------------------------------------------
-			printer.println(`REMITENTE         : ${body.sender}`);
-			printer.println(`DNI/RUC           : ${body.sender_id}`);			
-
+		// REMITENTE
+		printer.println(printLines()); //------------------------------------------
+		printer.println(`REMITENTE         : ${body.sender}`);
+		printer.println(`DNI/RUC           : ${body.sender_id}`);			
 			// CONSIGNADO
-			printer.println(printLines()); //------------------------------------------
-			printer.println(`CONSIGNADO        : ${body.receiver}`);
-			printer.println(`DNI/RUC           : ${body.receiver_id}`);
-			
-			// CONSIGNADO 2
-			printer.println(printLines()); //------------------------------------------
-			if('receiver_2' in body){
-				printer.println(`CONSIGNADO        : ${body.receiver_2}`);
-				printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
+		printer.println(printLines()); //------------------------------------------
+		printer.println(`CONSIGNADO        : ${body.receiver}`);
+		printer.println(`DNI/RUC           : ${body.receiver_id}`);
+		
+		// CONSIGNADO 2
+		printer.println(printLines()); //------------------------------------------
+		if('receiver_2' in body){
+			printer.println(`CONSIGNADO        : ${body.receiver_2}`);
+			printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
+		}
+		printer.println(printLines()); //------------------------------------------
+		printer.println(`TIPO              : ENCOMIENDA`);
+		printer.println(`ORIGEN            : ${body.departure}`);
+		printer.println(`DESTINO           : ${arrival}`);
+		printer.println(`ITEMS        :`);
+		body.items.map(function (e) {
+			printer.table([e.quantity, e.name, e.total]);
+		})
+
+		printer.println(printLines()); //------------------------------------------			
+		if (parseInt(body.document_type) === 6) {
+			printer.println(`SUBTOTAL            : ${body.subtotal}`);			
+			printer.println(`IGV            : ${body.igv}`);
+		}
+		printer.println(`TOTAL            : ${body.total}`);
+		printer.println(printLines()); //------------------------------------------
+		printer.alignCenter();
+		let letras = numeroALetras(parseFloat(body.total), {
+			plural: 'dólares estadounidenses',
+			singular: 'dólar estadounidense',
+			centPlural: 'centavos',
+			centSingular: 'centavo'
+	    });
+
+		printer.println(`SON: ${letras}`);
+		printer.alignLeft();
+		printer.println(printLines()); //----------------------------------
+		printer.bold(true);
+		printer.println(`FORMA DE PAGO: ${body.payment_type}`);
+		printer.bold(false);
+		printer.println(printLines()); //----------------------------------
+		printer.alignCenter();
+		printer.printQR(`${body.ticket_id}`)
+		if(client_data.client_data.print_bottom === true){
+			printer.println(client_data.client_data.bottom_text)
+		}
+		printer.partialCut();
+		printer.execute(function (err) {
+			if (err) {
+				console.error(`Print failed`, err);
+			} else {
+				console.log(`Print done`);
 			}
-			printer.println(printLines()); //------------------------------------------
-			printer.println(`TIPO              : ENCOMIENDA`);
-			printer.println(`ORIGEN            : ${body.departure}`);
-			printer.println(`DESTINO           : ${arrival}`);
-			printer.println(`ITEMS        :`);
-			body.items.map(function (e) {
-				printer.table([e.quantity, e.name, e.total]);
-			})
-
-			printer.println(printLines()); //------------------------------------------			
-			if (parseInt(body.document_type) === 6) {
-				printer.println(`SUBTOTAL            : ${body.subtotal}`);			
-				printer.println(`IGV            : ${body.igv}`);
-			}
-			printer.println(`TOTAL            : ${body.total}`);
-			printer.println(printLines()); //------------------------------------------
-			printer.alignCenter();
-
-			let letras = numeroALetras(parseFloat(body.total), {
-				plural: 'dólares estadounidenses',
-				singular: 'dólar estadounidense',
-				centPlural: 'centavos',
-				centSingular: 'centavo'
-			  });
-
-			printer.println(`SON: ${letras}`);
-			printer.alignLeft();
-
-			printer.println(printLines()); //----------------------------------
-			printer.bold(true);
-			printer.println(`FORMA DE PAGO: ${body.payment_type}`);
-			printer.bold(false);
-			printer.println(printLines()); //----------------------------------
-
-			printer.alignCenter();
-			printer.printQR(`${body.ticket_id}`)
-
-			if(client_data.client_data.print_bottom === true){
-				printer.println(client_data.client_data.bottom_text)
-			}
-			printer.partialCut();
-			printer.execute(function (err) {
-				if (err) {
-					console.error(`Print failed`, err);
-				} else {
-					console.log(`Print done`);
-				}
-			});
-			res.send('<h1>UNO SAN</h1>')
-	});
-
+		});	
+		printer.clear();	
+		res.send('<h1>UNO SAN</h1>');	
+	});	
 })
 
 function printLines(){
