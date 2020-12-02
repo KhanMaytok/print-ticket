@@ -1,4 +1,6 @@
 @echo off
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
 rmdir /Q/S node_modules
 git init
 git remote add origin https://github.com/KhanMaytok/print-ticket.git
