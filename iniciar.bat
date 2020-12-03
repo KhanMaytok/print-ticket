@@ -6,8 +6,6 @@ taskkill /f /im node.exe
 echo "COMPROBANDO ACTUALIZACIONES"
 call git stash
 call git pull origin node12
-call npm install
-call npm install printer --msvs_version=2017  --build-from-source
 call nodemon index.js
 
 echo " _____       _      _           _       "
