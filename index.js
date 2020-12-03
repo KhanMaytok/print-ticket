@@ -61,7 +61,7 @@ app.post('/', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
-    printer.printImage(logo, function (done) {
+    printer.printImage(logo).then(function (done) {
         printer.println(" ")
         printer.println(" ")
         printer.alignCenter();
@@ -159,7 +159,7 @@ app.post('/credit-note', (req, res) => {
     }
 
     printer.alignCenter();
-    printer.printImage('./logo.png', function (done) {
+    printer.printImage(logo).then(function (done) {
         printer.println(" ")
         printer.println(" ")
         printer.bold(true)
@@ -270,7 +270,7 @@ app.post('/encomiendas/', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
-    printer.printImage(logo, function (done) {
+    printer.printImage(logo).then(function (done) {
         body = body.invoice
         console.log(body.items);
         printer.println(" ")
