@@ -4,7 +4,6 @@ echo "CERRANDO OTROS PROCESOS DE IMPRESIÓN"
 taskkill /f /im node.exe
 
 echo "COMPROBANDO ACTUALIZACIONES"
-call git reset --hard ae57b04cd7d75
 call git stash
 call git pull origin node12
 call nodemon index.js
