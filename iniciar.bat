@@ -5,7 +5,7 @@ taskkill /f /im node.exe
 
 echo "COMPROBANDO ACTUALIZACIONES"
 call git stash
-call git pull origin master
+call git pull origin node12
 call npm install
 call nodemon index.js
 
@@ -17,3 +17,4 @@ echo " _| |_| | | | | (__| | (_| | (_| | (_) |"
 echo "|_____|_| |_|_|\___|_|\__,_|\__,_|\___/ "
 
 pause
+W
