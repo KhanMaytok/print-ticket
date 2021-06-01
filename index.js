@@ -208,11 +208,11 @@ app.post('/money-transfer/', (req, res) => {
         printer.println(" ")
         printer.alignCenter();
         printer.bold(true)
-        printer.println(`TOURS ANGEL DIVINO SAC`);
+        printer.println(body.enterprise_name);
         printer.bold(false)
-        printer.println(`Av. Jorge Chavez Nro. 1365`)
+        printer.println(body.enterprise_address)
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency}`)
-        printer.println(`R.U.C. 20395419715`);
+        printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(printLines());
 
         printer.println('GIRO - TRANSFERENCIA DE DINERO');
@@ -277,11 +277,11 @@ app.post('/encomiendas/', (req, res) => {
         printer.println(" ")
         printer.alignCenter();
         printer.bold(true)
-        printer.println(`TOURS ANGEL DIVINO SAC`);
+        printer.println(body.enterprise_name);
         printer.bold(false)
-        printer.println(`Av. Jorge Chavez Nro. 1365`)
+        printer.println(body.enterprise_address)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
-        printer.println(`R.U.C. 20395419715`);
+        printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(printLines());
         let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
 
