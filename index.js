@@ -71,6 +71,7 @@ app.post('/', (req, res) => {
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.println(`Telf. ${body.telephone || ''}`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
@@ -168,6 +169,7 @@ app.post('/credit-note', (req, res) => {
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency_address}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.println(`Telf. ${body.telephone || ''}`);
         printLines();
         printer.println("NOTA DE CRÉDITO");
         printer.setTextDoubleHeight();
@@ -213,6 +215,7 @@ app.post('/money-transfer/', (req, res) => {
         printer.println(body.enterprise_address)
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.println(`Telf. ${body.telephone || ''}`);
         printer.println(printLines());
 
         printer.println('GIRO - TRANSFERENCIA DE DINERO');
@@ -282,6 +285,7 @@ app.post('/encomiendas/', (req, res) => {
         printer.println(body.enterprise_address)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.println(`Telf. ${body.telephone || ''}`);
         printer.println(printLines());
         let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
 
