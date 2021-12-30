@@ -125,6 +125,7 @@ app.post('/', (req, res) => {
         printer.println(`FORMA DE PAGO: ${body.payment_type}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
+        printer.println(`${body.invoice_footer || ''}`);
 
         printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
@@ -177,6 +178,7 @@ app.post('/credit-note', (req, res) => {
         printer.println(`${body.cancel_serie}-${body.cancel_number}`);
         printer.setTextNormal();
         printer.println(`Para: ${body.ticket_serie}-${body.ticket_number}`);
+        printer.println(`${body.invoice_footer || ''}`);
         printer.partialCut();
         printer.execute(function (err) {
             if (err) {
@@ -247,6 +249,9 @@ app.post('/money-transfer/', (req, res) => {
         printer.println(`COMISION        : S/. ${parseFloat(body.commission).toFixed(2)}`);
         printer.println(`TOTAL A COBRAR  : S/. ${parseFloat(body.total).toFixed(2)}`);
         printer.bold(false);
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`${body.invoice_footer || ''}`);
+
 
         if (client_data.client_data.print_bottom === true) {
             printer.println(client_data.client_data.bottom_text)
@@ -367,6 +372,8 @@ app.post('/encomiendas/', (req, res) => {
         if (client_data.client_data.print_bottom === true) {
             printer.println(client_data.client_data.bottom_text)
         }
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`${body.invoice_footer || ''}`);
         printer.partialCut();
         printer.execute(function (err) {
             if (err) {
