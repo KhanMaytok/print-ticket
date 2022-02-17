@@ -131,7 +131,7 @@ app.post('/', (req, res) => {
 
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
-        const forma_pago = body.payment_type === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
@@ -374,7 +374,7 @@ app.post('/encomiendas/', (req, res) => {
         printer.alignLeft();
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
-        const forma_pago = body.payment_type === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
