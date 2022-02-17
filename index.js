@@ -83,7 +83,7 @@ app.post('/', (req, res) => {
         }
 
         if(body.total_letter === '---') {
-            boddy.total_letter = numeroALetras(parseFloat(body.total), {
+            body.total_letter = numeroALetras(parseFloat(body.total), {
                 plural: 'dólares estadounidenses',
                 singular: 'dólar estadounidense',
                 centPlural: 'centavos',
@@ -131,7 +131,8 @@ app.post('/', (req, res) => {
 
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
-        printer.println(`FORMA DE PAGO: ${body.payment_type}`);
+        const forma_pago = body.payment_type === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
@@ -373,7 +374,8 @@ app.post('/encomiendas/', (req, res) => {
         printer.alignLeft();
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
-        printer.println(`FORMA DE PAGO: ${body.payment_type}`);
+        const forma_pago = body.payment_type === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.alignCenter();
