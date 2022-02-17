@@ -82,6 +82,15 @@ app.post('/', (req, res) => {
             invoice_type = "VALE";
         }
 
+        if(body.total_letter === '---') {
+            boddy.total_letter = numeroALetras(parseFloat(body.total), {
+                plural: 'dólares estadounidenses',
+                singular: 'dólar estadounidense',
+                centPlural: 'centavos',
+                centSingular: 'centavo'
+            });
+        }
+
         printer.println(`${invoice_type}`);
         printer.setTextDoubleHeight();
         printer.setTextDoubleWidth();
