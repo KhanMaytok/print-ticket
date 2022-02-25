@@ -299,15 +299,6 @@ app.post('/logistics/', (req, res) => {
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(`Telf. ${body.enterprise_telephone || ''}`);
         printer.println(printLines());
-        let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
-
-        let invoice_type = "BOLETA ELECTRÓNICA"
-        if (parseInt(body.document_type) === 6) {
-            invoice_type = "FACTURA ELECTRÓNICA";
-        }
-        if (body.serie.startsWith('V')) {
-            invoice_type = "CONSTANCIA DE VENTA"
-        }
 
         printer.println(`TICKET DE IMPRESION`);
         printer.setTextNormal();
