@@ -318,10 +318,10 @@ app.post('/logistics/', (req, res) => {
         printer.println(printLines()); //------------------------------------------
         printer.println(`CANTIDAD          : ${body.total}`);
         printer.println(`DESDE             : ${body.from}`);
-        printer.println(`CANTIDAD          : ${body.to}`);
-        printer.println(`CANTIDAD          : ${body.driver}`);
-        printer.println(`CANTIDAD          : ${body.schedule}`);
-        printer.println(`CANTIDAD          : ${body.vehicle}`);
+        printer.println(`HASTA             : ${body.to}`);
+        printer.println(`CONDUCTOR         : ${body.driver}`);
+        printer.println(`RUTA              : ${body.schedule}`);
+        printer.println(`VEHÍCULO          : ${body.vehicle}`);
         // MENSAJERO
         printer.println(printLines()); //------------------------------------------
         printer.println(" ")
