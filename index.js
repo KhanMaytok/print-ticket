@@ -281,6 +281,78 @@ app.post('/money-transfer/', (req, res) => {
     //res.send('<h1>UNO SAN</h1>')
 })
 
+app.post('/logistics/', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    printer.printImage(logo).then(function (done) {
+        body = body.invoice
+        printer.println(" ")
+        printer.println(" ")
+        printer.alignCenter();
+        printer.bold(true)
+        printer.println(body.enterprise_name);
+        printer.bold(false)
+        printer.println(body.enterprise_address)
+        printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.println(`Telf. ${body.enterprise_telephone || ''}`);
+        printer.println(printLines());
+        let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
+
+        let invoice_type = "BOLETA ELECTRÓNICA"
+        if (parseInt(body.document_type) === 6) {
+            invoice_type = "FACTURA ELECTRÓNICA";
+        }
+        if (body.serie.startsWith('V')) {
+            invoice_type = "CONSTANCIA DE VENTA"
+        }
+
+        printer.println(`TICKET DE IMPRESION`);
+        printer.setTextNormal();
+        printer.alignLeft();
+        printer.println(`USUARIO REGISTRA  : ${body.sender}`);
+        printer.println(`OFICINA REGISTRO  : ${body.departure}`);
+        printer.println(`RECAUDADOR        : ${body.receiver}`);
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`CANTIDAD          : ${body.total}`);
+        printer.println(`DESDE             : ${body.from}`);
+        printer.println(`CANTIDAD          : ${body.to}`);
+        printer.println(`CANTIDAD          : ${body.driver}`);
+        printer.println(`CANTIDAD          : ${body.schedule}`);
+        printer.println(`CANTIDAD          : ${body.vehicle}`);
+        // MENSAJERO
+        printer.println(printLines()); //------------------------------------------
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(printLines()); //------------------------------------------
+        printer.alignCenter();
+        printer.println(`FIRMA DE QUIEN ENTREGA`);
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`FIRMA DE QUIEN RECIBE`);
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        printer.clear();
+        res.send('<h1>UNO SAN</h1>');
+    });
+})
 
 app.post('/encomiendas/', (req, res) => {
     let body = req.body;
