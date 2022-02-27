@@ -287,31 +287,33 @@ app.post('/logistics/', (req, res) => {
     if (typeof (body) === "string") {
         body = JSON.parse(body);
     }
+    c = body.company;
+    i = body.money_sent;
     printer.printImage(logo).then(function (done) {
         printer.println(" ")
         printer.println(" ")
         printer.alignCenter();
         printer.bold(true)
-        printer.println(body.enterprise_name);
+        printer.println(c.razonSocial);
         printer.bold(false)
-        printer.println(body.enterprise_address)
-        printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telf. ${body.enterprise_telephone || ''}`);
+        printer.println(c.address.direccion)
+        printer.println(`R.U.C. ${c.ruc}`);
+        printer.println(`Telf. ${c.enterprise_telephone || ''}`);
         printer.println(printLines());
 
         printer.println(`TICKET DE IMPRESION`);
         printer.setTextNormal();
         printer.alignLeft();
-        printer.println(`USUARIO REGISTRA  : ${body.sender}`);
-        printer.println(`OFICINA REGISTRO  : ${body.departure}`);
-        printer.println(`RECAUDADOR        : ${body.receiver}`);
+        printer.println(`USUARIO REGISTRA  : ${i.sender}`);
+        printer.println(`OFICINA REGISTRO  : ${i.departure}`);
+        printer.println(`RECAUDADOR        : ${i.receiver}`);
         printer.println(printLines()); //------------------------------------------
-        printer.println(`CANTIDAD          : ${body.total}`);
-        printer.println(`DESDE             : ${body.from}`);
-        printer.println(`HASTA             : ${body.to}`);
-        printer.println(`CONDUCTOR         : ${body.driver}`);
-        printer.println(`RUTA              : ${body.schedule}`);
-        printer.println(`VEHÍCULO          : ${body.vehicle}`);
+        printer.println(`CANTIDAD          : ${i.total}`);
+        printer.println(`DESDE             : ${i.from}`);
+        printer.println(`HASTA             : ${i.to}`);
+        printer.println(`CONDUCTOR         : ${i.driver}`);
+        printer.println(`RUTA              : ${i.schedule}`);
+        printer.println(`VEHÍCULO          : ${i.vehicle}`);
         // MENSAJERO
         printer.println(printLines()); //------------------------------------------
         printer.println(" ")
