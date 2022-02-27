@@ -288,7 +288,6 @@ app.post('/logistics/', (req, res) => {
         body = JSON.parse(body);
     }
     printer.printImage(logo).then(function (done) {
-        body = body.invoice
         printer.println(" ")
         printer.println(" ")
         printer.alignCenter();
