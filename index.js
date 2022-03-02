@@ -354,7 +354,7 @@ app.post('/logistics/budget', (req, res) => {
         body = JSON.parse(body);
     }
     c = body.company;
-    i = body.money_sent;
+    i = body.budget;
     printer.printImage(logo).then(function (done) {
         printer.println(" ")
         printer.println(" ")
