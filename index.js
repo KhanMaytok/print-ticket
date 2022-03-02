@@ -346,6 +346,49 @@ app.post('/logistics/', (req, res) => {
     });
 })
 
+
+app.post('/logistics/budget', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    c = body.company;
+    i = body.money_sent;
+    printer.printImage(logo).then(function (done) {
+        printer.println(" ")
+        printer.println(" ")
+        printer.alignCenter();
+        printer.bold(true)
+        printer.println(c.razonSocial);
+        printer.bold(false)
+        printer.println(c.address.direccion)
+        printer.println(`R.U.C. ${c.ruc}`);
+        printer.println(`Telf. ${c.enterprise_telephone || ''}`);
+        printer.println(printLines());
+
+        printer.println(`TICKET DE IMPRESION`);
+        printer.println(`${i.serie}-${i.number}`);
+        printer.setTextNormal();
+        printer.alignLeft();
+        printer.println(`DESCRIPCION : ${i.name}`);
+        printer.println(`TOTAL       : S/ ${i.total}`);
+        printer.println(`TIPO        : ${i.budget_type}`);
+        printer.println(`DATE        : ${i.created_at}`);
+        printer.println(printLines()); //------------------------------------------
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        printer.clear();
+        res.send('<h1>UNO SAN</h1>');
+    });
+})
+
 app.post('/encomiendas/', (req, res) => {
     let body = req.body;
     console.log(body);
