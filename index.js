@@ -361,10 +361,21 @@ app.post('/logistics/budget', (req, res) => {
         printer.println(`TOTAL         : S/ ${i.total}`);
         printer.println(`TIPO          : ${i.budget_type}`);
         printer.println(`FECHA         : ${i.created_at}`);
+        printer.println(printLines()); //------------------------------------------        
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
+        printer.println(" ")
         printer.println(printLines()); //------------------------------------------
+        printer.alignCenter();
         printer.println(`ENTREGADO POR : ${i.enterprise_name}`);
         printer.println(`DNI/RUC       : ${i.ruc}`);
-        printer.println(printLines()); //------------------------------------------
         printer.partialCut();
         printer.execute(function (err) {
             if (err) {
