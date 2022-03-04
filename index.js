@@ -292,16 +292,9 @@ app.post('/logistics/', (req, res) => {
     printer.printImage(logo).then(function (done) {
         printer.println(" ")
         printer.println(" ")
-        printer.alignCenter();
-        printer.bold(true)
-        printer.println(c.razonSocial);
-        printer.bold(false)
-        printer.println(c.address.direccion)
-        printer.println(`R.U.C. ${c.ruc}`);
-        printer.println(`Telf. ${c.enterprise_telephone || ''}`);
-        printer.println(printLines());
-
-        printer.println(`TICKET DE IMPRESION`);
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`TICKET DE ${i.budget_type.toUpperCase()}`);
+        printer.println(printLines()); //------------------------------------------
         printer.setTextNormal();
         printer.alignLeft();
         printer.println(`USUARIO REGISTRA  : ${i.sender}`);
@@ -358,23 +351,19 @@ app.post('/logistics/budget', (req, res) => {
     printer.printImage(logo).then(function (done) {
         printer.println(" ")
         printer.println(" ")
-        printer.alignCenter();
-        printer.bold(true)
-        printer.println(c.razonSocial);
-        printer.bold(false)
-        printer.println(c.address.direccion)
-        printer.println(`R.U.C. ${c.ruc}`);
-        printer.println(`Telf. ${c.enterprise_telephone || ''}`);
-        printer.println(printLines());
-
-        printer.println(`TICKET DE IMPRESION`);
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`RECIBO DE INGRESOS/EGRESOS`);
+        printer.println(printLines()); //------------------------------------------
         printer.println(`${i.serie}-${i.number}`);
         printer.setTextNormal();
         printer.alignLeft();
-        printer.println(`DESCRIPCION : ${i.name}`);
-        printer.println(`TOTAL       : S/ ${i.total}`);
-        printer.println(`TIPO        : ${i.budget_type}`);
-        printer.println(`DATE        : ${i.created_at}`);
+        printer.println(`DESCRIPCION   : ${i.name}`);
+        printer.println(`TOTAL         : S/ ${i.total}`);
+        printer.println(`TIPO          : ${i.budget_type}`);
+        printer.println(`FECHA         : ${i.created_at}`);
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`ENTREGADO POR : ${i.enterprise_name}`);
+        printer.println(`DNI/RUC       : ${i.ruc}`);
         printer.println(printLines()); //------------------------------------------
         printer.partialCut();
         printer.execute(function (err) {
