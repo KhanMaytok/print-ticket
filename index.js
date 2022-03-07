@@ -374,8 +374,10 @@ app.post('/logistics/budget', (req, res) => {
         printer.println(" ")
         printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
-        printer.println(`ENTREGADO POR : ${i.enterprise_name}`);
-        printer.println(`DNI/RUC       : ${i.ruc}`);
+        printer.println(`ENTREGADO POR : ${i.person_name}`);
+        printer.println(`DOC.IDENTIDAD : ${i.person_id}`);
+        printer.println(`EMPRESA       : ${i.enterprise_name}`);
+        printer.println(`RUC           : ${i.ruc}`);
         printer.partialCut();
         printer.execute(function (err) {
             if (err) {
