@@ -238,8 +238,10 @@ app.post('/ticket/invoice/20495803121', (req, res) => { // Tours Corazon E.I.R.L
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
-        printer.println(`SOAT     : ${body.soat || ''}`);
-        printer.println(`VEHICULO : ${body.registration || ''}`);
+        printer.alignCenter();
+        printer.println(`Usted viaja asegurado (La Positiva). Póliza número ${body.soat || ""}. En caso de accidente, comuníquese al Telf. (01) 211-0-211.`);
+        printer.println(`Bus placa N° ${body.registration}`);
+        printer.alignLeft();
 
         printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
