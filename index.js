@@ -379,7 +379,6 @@ app.post('/ticket/invoice/20603446004', (req, res) => { // IMPERIAL - 2060344600
         printer.clear();
         res.send('<h1>UNO SAN</h1>')
     });
-
 })
 
 app.post('/ticket/invoice/20600916239', (req, res) => { // SOL CHOTANO - 20600916239
