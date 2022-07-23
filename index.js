@@ -261,6 +261,127 @@ app.post('/ticket/invoice/20395419715', (req, res) => { // TOURS ANGEL DIVINO - 
 })
 
 
+app.post('/ticket/invoice/20603446004', (req, res) => { // IMPERIAL - 20603446004
+    console.log(req.body);
+    let body = req.body;
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    printer.printImage(logo).then(function (done) {
+        printer.println(" ")
+        printer.println(" ")
+        printer.alignCenter();
+        printer.bold(true)
+        printer.println(`TRANSPORTE IMPERIAL DEL NORTE SAC`);
+        printer.println(`RUC: 20603446004`);
+        printer.println(`AV. PANAMERICANA NORTE KM. 558 - TRUJILLO - TRUJILLO - LA LIBERTAD`);
+        printer.bold(false);
+        printer.println(`Of. Terrapuerto: 996 767 948`);
+        printer.println(`Of. Plaza Norte: 902 408 927`);
+        printer.println(`Of. Principal: 920 683 085`);
+        printer.println(printLines()); //----------------------------------
+        printer.println(" ")
+
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
+        if (body.enterprise_client_id !== "0") {
+            invoice_type = "FACTURA DE VENTA ELECTRÓNICA";
+        }
+        if (body.is_vale === true) {
+            invoice_type = "VALE";
+        }
+
+        if(body.total_letter === '---') {
+            body.total_letter = numeroALetras(parseFloat(body.total), {
+                plural: 'dólares estadounidenses',
+                singular: 'dólar estadounidense',
+                centPlural: 'centavos',
+                centSingular: 'centavo'
+            });
+        }
+
+        printer.println(`${invoice_type}`);
+        printer.setTextDoubleHeight();
+        printer.setTextDoubleWidth();
+        printer.println(`${body.serie}-${body.number}`);
+        printer.setTextNormal();
+        printer.alignLeft();
+        printer.println(`FECHA EMISION: ${body.buy_date}`);
+        printer.println(`ATENDIDO POR : ${body.seller}`);
+        printer.println(printLines());
+        if (body.enterprise_client_id !== "0") {
+            printer.println(`RAZÓN SOCIAL: ${body.enterprise_client}`);
+            printer.println(`RUC         : ${body.enterprise_client_id}`);
+        }
+        printer.println(`DOC PASAJERO: ${body.dni}`);
+        printer.println(`PASAJERO    : ${body.passenger_name}`);
+        printer.println(printLines());
+        printer.alignCenter();
+        printer.bold(true);
+        printer.println(`DATOS DEL VIAJE`);
+        printer.bold(false);
+        printer.println(printLines());
+        printer.alignLeft();
+        //printer.setTextDoubleHeight();                      // Set text to double height
+        printer.setTextDoubleWidth();
+        printer.println(`ORIGEN     : ${body.departure}`);
+        printer.println(`DESTINO    : ${body.arrival}`);
+        printer.println(`FECHA VIAJE: ${body.departure_date}`);
+        printer.println(`HORA VIAJE : ${body.schedule_hour}`);
+        printer.println(`EMBARQUE   : ${body.departure_hour}`);
+        printer.println(`ASIENTO    : ${body.seat}`);
+        printer.println(`IMPORTE    : S/ ${body.total}`);
+        printer.setTextNormal();
+
+        printer.println(printLines());
+        printer.alignCenter();
+        printer.println(`SON: ${body.total_letter}`);
+        printer.alignLeft();
+
+        printer.println(printLines()); //----------------------------------
+        printer.bold(true);
+        const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        printer.println(`FORMA DE PAGO: ${forma_pago}`);
+        printer.bold(false);
+        printer.println(printLines()); //----------------------------------
+        printer.println(`  `);
+        printer.println(`  `);
+        printer.partialCut();
+        printer.println(`CONTROL REF: ${body.serie}-${body.number}`)
+        printer.bold(true);
+        printer.println(`PASAJERO:`);
+        printer.bold(false);
+        printer.println(`SR(A): ${body.dni} - ${body.passenger_name}`);
+        printer.bold(true);
+        printer.println(`AGENCIA DE EMBARQUE:`);
+        printer.bold(false);
+        printer.println(`${body.departure}`);
+        printer.println(`ORIGEN     : ${body.departure}`);
+        printer.println(`DESTINO    : ${body.arrival}`);
+        printer.println(`FECHA VIAJE: ${body.departure_date}`);
+        printer.println(`HORA VIAJE : ${body.schedule_hour}`);
+        printer.println(`ASIENTO    : ${body.seat}`);
+        printer.println(`IMPORTE    : S/ ${body.total}`);
+        printer.println(`  `);
+
+        const now = new Date();
+
+        printer.println(`Fecha-Hora de impresión: ${now.toLocaleString()}`);        
+        printer.println(`Usuario: ${body.seller}`);
+
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        printer.clear();
+        res.send('<h1>UNO SAN</h1>')
+    });
+
+})
+
 app.post('/ticket/invoice/20600916239', (req, res) => { // SOL CHOTANO - 20600916239
     console.log(req.body);
     let body = req.body;
