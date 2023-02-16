@@ -810,7 +810,7 @@ app.post('/ticket/invoice/20480150857', (req, res) => { // TORRES 20480150857
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telf. ${body.enterprise_telephone || ''}`);
+        printer.println(`Telf. ${body.enterprise_telephone || ''} - Juanjui: 990 009 838`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
