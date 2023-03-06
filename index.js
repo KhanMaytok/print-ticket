@@ -1161,8 +1161,8 @@ app.post('/ticket/invoice/20529682248', (req, res) => { // CRUCERO JAEN - 205296
         printer.alignLeft();
         //printer.setTextDoubleHeight();                      // Set text to double height
         printer.setTextDoubleWidth();
-        printer.println(`ORIGEN     : ${body.ubigeo_departure} - ${body.departure}`);
-        printer.println(`DESTINO    : ${body.ubigeo_arrival} - ${body.arrival}`);
+        printer.println(`ORIGEN     : ${body.departure} - ${body.ubigeo_departure}`);
+        printer.println(`DESTINO    : ${body.arrival} - ${body.ubigeo_arrival}`);
         printer.println(`FECHA VIAJE: ${body.departure_date}`);
         printer.println(`HORA VIAJE : ${body.schedule_hour}`);
         printer.println(`EMBARQUE   : ${body.departure_hour}`);
