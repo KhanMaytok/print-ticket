@@ -373,7 +373,7 @@ app.post('/ticket/invoice/20605002863', (req, res) => { // ESANTUR - 20605002863
         printer.println(" ")
         printer.alignCenter();
         printer.bold(true)
-        printer.println(`${body.enterprise_name}`);
+        printer.println(`ESANTUR`);
         printer.bold(false)
         printer.println(`774_1 Panamericana Norte - Terminal Gasela - Cel. 978 282 295`)
         printer.println(`Av. Mesones Muro cdra. 7 terminal Tetsur - Jaén - Cel. 959 666 747`)
