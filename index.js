@@ -1984,7 +1984,11 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(" ")
         printer.println(" ")
         printer.alignCenter();
-        printer.println(`${body.seller_agency.toUpperCase()}`)
+        printer.bold(true)
+        printer.println(`${body.serie}`);
+        printer.bold(false)
+        const arrival = body.final_arrival === null || body.final_arrival === '' ? body.arrival : body.final_arrival;
+        printer.println(`${arrival.toUpperCase()} - ${arrival_district.toUpperCase()}`)
 
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (parseInt(body.document_type) === 6) {
@@ -1994,24 +1998,28 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
             invoice_type = "CONSTANCIA DE VENTA"
         }
         printer.println(`${invoice_type}`);
+        printer.alignLeft();
         printer.println(`FECHA EMISION     : ${body.created_at}`);
         printer.println(`FECHA TRANSLADO   : ${body.created_at}`);
         printer.println(`ORIGEN            : ${body.seller_agency}`)
         printer.println(`DESTINO           : ${body.arrival}`)
         printer.println(printLines()); //------------------------------------------
+        printer.alignCenter();
         printer.println(`DATOS DEL REMITENTE`)
+        printer.alignLeft();
         // MENSAJERO
-         if ('sender_2' in body) {
-             printer.println(`MENSAJERO         : ${body.sender_2}`);
-             printer.println(`DNI               : ${body.sender_2_id}`);
-         }
+        if ('sender_2' in body) {
+            printer.println(`MENSAJERO         : ${body.sender_2}`);
+            printer.println(`DNI               : ${body.sender_2_id}`);
+        }
  
-         // REMITENTE
-         printer.println(printLines()); //------------------------------------------
-         printer.println(`REMITENTE         : ${body.sender}`);
-         printer.println(`DNI/RUC           : ${body.sender_id}`);
-
-         printer.println(`DATOS DEL DESTINATARIO`) 
+        // REMITENTE
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`REMITENTE         : ${body.sender}`);
+        printer.println(`DNI/RUC           : ${body.sender_id}`);
+        printer.alignCenter();
+        printer.println(`DATOS DEL DESTINATARIO`)
+        printer.alignLeft();
         // CONSIGNADO
         printer.println(printLines()); //------------------------------------------
         printer.println(`CONSIGNADO        : ${body.receiver}`);
