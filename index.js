@@ -1988,7 +1988,7 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(`${body.serie}`);
         printer.bold(false)
         const arrival = body.final_arrival === null || body.final_arrival === '' ? body.arrival : body.final_arrival;
-        printer.println(`${arrival.toUpperCase()} - ${arrival_district.toUpperCase()}`)
+        printer.println(`${arrival.toUpperCase()} - ${body.arrival_district.toUpperCase()}`)
 
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (parseInt(body.document_type) === 6) {
