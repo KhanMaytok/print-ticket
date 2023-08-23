@@ -1981,6 +1981,7 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
     }
     printer.printImage(logo).then(function (done) {
         body = body.invoice
+        const cellphone = body.cellphone === '' ? '-' : body.cellphone;
         printer.println(" ")
         printer.println(" ")
         printer.alignCenter();
@@ -1991,7 +1992,6 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(`${arrival.toUpperCase()} - ${body.arrival_district.toUpperCase()}`)
         printer.println('ATENCION AL CLIENTE: 074 630438');
         
-
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (parseInt(body.document_type) === 6) {
             invoice_type = "FACTURA ELECTRÓNICA";
@@ -2019,6 +2019,7 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(printLines()); //------------------------------------------
         printer.println(`REMITENTE         : ${body.sender}`);
         printer.println(`DNI/RUC           : ${body.sender_id}`);
+        printer.println(`Teléfono          : ${cellphone}`);
         printer.alignCenter();
         printer.println(`DATOS DEL DESTINATARIO`)
         printer.alignLeft();
