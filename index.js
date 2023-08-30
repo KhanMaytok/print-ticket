@@ -1217,13 +1217,15 @@ app.post('/ticket/invoice/20529682248', (req, res) => { // CRUCERO JAEN - 205296
         printer.alignCenter();
         printer.bold(true)
         printer.println(`${body.enterprise_name}`);
+        printer.println(`CRUCERO JAÉN`);
         printer.bold(false)
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(`Telf. ${body.enterprise_telephone || ''}`);
         printer.println(printLines());
-
+        printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
+        printer.println(`Número atención al cliente: 074 630438`);
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
             invoice_type = "FACTURA ELECTRÓNICA";
