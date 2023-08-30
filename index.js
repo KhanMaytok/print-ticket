@@ -1277,6 +1277,7 @@ app.post('/ticket/invoice/20529682248', (req, res) => { // CRUCERO JAEN - 205296
         printer.println(`ASIENTO    : ${body.seat}`);
         printer.println(`IMPORTE    : S/ ${body.total}`);
         printer.setTextNormal();
+        printer.println(`Observaciones : ${body.observations}`);
 
         printer.println(printLines());
         printer.alignCenter();
