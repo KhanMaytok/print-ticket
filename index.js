@@ -1986,8 +1986,11 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         body = body.invoice
         const cellphone = body.cellphone === '' ? '-' : body.cellphone;
         printer.println(" ")
-        printer.println(" ")
         printer.alignCenter();
+        printer.println("Transportes El Crucero de Jaén S.A.C")
+        printer.println("CRUCERO JAÉN")
+        printer.println("RUC: 20529682248")
+        printer.println("Avenida Mesones Muro 642 Aromo Alto Jaén")
         printer.bold(true)
         printer.println(`${body.serie}`);
         printer.bold(false)
