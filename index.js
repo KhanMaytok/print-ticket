@@ -1868,6 +1868,7 @@ app.post('/encomiendas/', (req, res) => {
     }
     printer.printImage(logo).then(function (done) {
         body = body.invoice
+        const cellphone = body.cellphone === '' ? '-' : body.cellphone;
         console.log(body.items);
         printer.println(" ")
         printer.println(" ")
@@ -1924,6 +1925,7 @@ app.post('/encomiendas/', (req, res) => {
             printer.println(`CONSIGNADO        : ${body.receiver_2}`);
             printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
         }
+        printer.println(`Teléfono          : ${cellphone}`);
         printer.println(printLines()); //------------------------------------------
         printer.println(`TIPO              : ENCOMIENDA`);
         printer.println(`ORIGEN            : ${body.departure}`);
