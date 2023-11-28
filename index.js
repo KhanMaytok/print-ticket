@@ -914,7 +914,7 @@ app.post('/ticket/invoice/20480150857', (req, res) => { // TORRES 20480150857
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telf. ${body.enterprise_telephone || ''} - Juanjui: 990 009 838`);
+        printer.println(`Teléfonos: Chiclayo 960553071 - 942097541`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
@@ -1222,10 +1222,10 @@ app.post('/ticket/invoice/20529682248', (req, res) => { // CRUCERO JAEN - 205296
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telf. ${body.enterprise_telephone || ''}`);
         printer.println(printLines());
         printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
-        printer.println(`Número atención al cliente: 074 630438`);
+        printer.println(`Atención al cliente: 980 845 273 - 963 450 965`);
+        printer.println(`Ventas whatsapp: 977726252`);
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
             invoice_type = "FACTURA ELECTRÓNICA";
