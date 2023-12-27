@@ -1329,7 +1329,7 @@ app.post('/ticket/invoice/20529522801', (req, res) => { // COMBIS - 20529522801
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telef oficina Chiclayo: 979 974 469 - 995 601 837`);
+        printer.println(`Telef. Oficina Chiclayo: 995 601 837 - Oficina Chota: 965 958 977`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
