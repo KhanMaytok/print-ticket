@@ -2015,6 +2015,7 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(`ORIGEN            : ${body.seller_agency}`)
         printer.println(`DESTINO           : ${body.arrival}`)
         printer.println(printLines()); //------------------------------------------
+        printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
         printer.println(`DATOS DEL REMITENTE`)
         printer.alignLeft();
@@ -2030,6 +2031,8 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(`DNI/RUC           : ${body.sender_id}`);
         printer.println(`Teléfono          : ${cellphone}`);
         printer.alignCenter();
+        printer.println(printLines()); //------------------------------------------
+        printer.println(printLines()); //------------------------------------------
         printer.println(`DATOS DEL DESTINATARIO`)
         printer.alignLeft();
         // CONSIGNADO
