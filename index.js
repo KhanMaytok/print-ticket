@@ -914,7 +914,7 @@ app.post('/ticket/invoice/20480150857', (req, res) => { // TORRES 20480150857
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Teléfonos: Chiclayo 960553071 - 942097541`);
+        printer.println(`Teléfonos: Chiclayo 960553071 - 942097541 - Oficina Chota 976877804`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
