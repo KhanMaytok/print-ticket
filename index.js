@@ -1335,7 +1335,7 @@ app.post('/courier/shipping-order/20529682248', (req, res) => { // CRUCERO JAEN 
         printer.println('Ventas whatsapp: 977726252');
         printer.println('Atención al cliente: 980 845 273 - 963 450 965');
         
-        let invoice_type = "GUÍA DE REMISIÓN"
+        let invoice_type = "GUIA DE REMISION DE TRANSPORTISTA"
         printer.println(`${invoice_type}`);
         printer.alignLeft();
         printer.println(`FECHA EMISION     : ${body.created_at}`);
