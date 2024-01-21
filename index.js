@@ -1405,7 +1405,8 @@ app.post('/courier/shipping-order/20529682248', (req, res) => { // CRUCERO JAEN 
         printer.println(`Marca: ${body.brand}`);
         printer.println(`Placa: ${body.plate}`);
         printer.println(`MTC: ${body.mtc}`);
-        printer.println(`Condición de pago: ${forma_pago}`); 
+        printer.println(`Condición de pago: ${forma_pago}`);
+        printer.println(`Representación impresa de la GUÍA DE REMISIÓN TRANSPORTISTA`); 
 
 
         printer.partialCut();
