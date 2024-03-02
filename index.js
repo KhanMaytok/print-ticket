@@ -1225,7 +1225,6 @@ app.post('/ticket/invoice/20529682248', (req, res) => { // CRUCERO JAEN - 205296
         printer.println(printLines());
         printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
         printer.println(`Atención al cliente: 980 845 273 - 963 450 965`);
-        printer.println(`Ventas whatsapp: 977726252`);
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
             invoice_type = "FACTURA ELECTRÓNICA";
