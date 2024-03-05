@@ -483,7 +483,7 @@ app.post('/ticket/invoice/20609883309', (req, res) => { // BUS CHOTA - 206098833
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. 20609883309`);
         printer.println(`Telf. LAJAS 959 191 720 - CHOTA 959 191 028 - CAJAMARCA 993 324 792`);
-        printer.println(`DIRECCION. LAJAS JR. ROSENDO MENDIVEL 088 - CHOTA CORONEL BECERRA 337 - CAJAMARCA JR. PUNO 230-232`);
+        printer.println(`DIRECCION. JOSE GALVEZ 265`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
