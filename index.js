@@ -1183,6 +1183,9 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
+        printer.println(`ASEGURADO CON: ${body.soat_provider}`);
+        printer.println(`POLIZA N°: ${body.soat}`);
+        printer.println("PRESENTARSE 30 MINUTOS ANTES DE LA HORA DE EMBARQUE");
 
         printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
