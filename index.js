@@ -1162,13 +1162,17 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.alignLeft();
         //printer.setTextDoubleHeight();                      // Set text to double height
         printer.setTextDoubleWidth();
-        printer.println(`ORIGEN     : ${body.departure}`);
-        printer.println(`DESTINO    : ${body.arrival}`);
-        printer.println(`FECHA VIAJE: ${body.departure_date}`);
-        printer.println(`HORA VIAJE : ${body.schedule_hour}`);
-        printer.println(`EMBARQUE   : ${body.departure_hour}`);
-        printer.println(`ASIENTO    : ${body.seat}`);
-        printer.println(`IMPORTE    : S/ ${body.total}`);
+        printer.println(`ORIGEN        : ${body.departure}`);
+        printer.println(`DESTINO       : ${body.arrival}`);
+        printer.println(`FECHA VIAJE   : ${body.departure_date}`);
+        printer.println(`HORA VIAJE    : ${body.schedule_hour}`);
+        let embark_time = (embark_time.date).split(' ')[1].split('.')[0];
+        embark_time = formatHourString(embark_time);
+        let embark_date = body.next_day === 'true' ? formatDateString(body.departure_date) : body.departure_date;
+        printer.println(`FECHA EMBARQUE: ${embark_date}`);
+        printer.println(`HORA EMBARQUE : ${body.embark_time}`);
+        printer.println(`ASIENTO       : ${body.seat}`);
+        printer.println(`IMPORTE       : S/ ${body.total}`);
         printer.setTextNormal();
 
         printer.println(printLines());
@@ -2349,4 +2353,40 @@ function getLogo() {
     } catch (err) {
         return './logo.png';
     }
+}
+
+function formatHourString(inputTime){
+    // Split the time string into hours and minutes
+    const [hours, minutes] = inputTime.split(':');
+
+    // Create a new Date object and set the hours and minutes
+    const formattedTime = new Date();
+    formattedTime.setHours(parseInt(hours, 10));
+    formattedTime.setMinutes(parseInt(minutes, 10));
+
+    // Format the time using Intl.DateTimeFormat
+    const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+    return new Intl.DateTimeFormat('en-US', timeOptions).format(formattedTime);
+}
+
+function formatDateString(inputTime){
+    // Input date string
+    const inputDate = '31/5/2024';
+
+    // Split the date string into day, month, and year
+    const [day, month, year] = inputDate.split('/');
+
+    // Create a new Date object and set the date to the input date
+    const currentDate = new Date(`${year}-${month}-${day}`);
+
+    // Add one day to the date
+    currentDate.setDate(currentDate.getDate() + 1);
+
+    // Get the new day, month, and year values
+    const newDay = currentDate.getDate();
+    const newMonth = currentDate.getMonth() + 1; // Month is 0-based, so add 1
+    const newYear = currentDate.getFullYear();
+
+    // Format the new date in the same format as the input date
+    return `${newDay}/${newMonth}/${newYear}`;
 }
