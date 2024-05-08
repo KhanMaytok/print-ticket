@@ -1162,17 +1162,17 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.alignLeft();
         //printer.setTextDoubleHeight();                      // Set text to double height
         printer.setTextDoubleWidth();
-        printer.println(`ORIGEN        : ${body.departure}`);
-        printer.println(`DESTINO       : ${body.arrival}`);
-        printer.println(`FECHA VIAJE   : ${body.departure_date}`);
-        printer.println(`HORA VIAJE    : ${body.schedule_hour}`);
+        printer.println(`ORIGEN     : ${body.departure}`);
+        printer.println(`DESTINO    : ${body.arrival}`);
+        printer.println(`FECHA VIAJE: ${body.departure_date}`);
+        printer.println(`HORA VIAJE : ${body.schedule_hour}`);
         let embark_time = (body.embark_time.date).split(' ')[1].split('.')[0];
         embark_time = formatHourString(embark_time);
         let embark_date = body.next_day === 'true' ? formatDateString(body.departure_date) : body.departure_date;
-        printer.println(`FECHA EMBARQUE: ${embark_date}`);
-        printer.println(`HORA EMBARQUE : ${embark_time}`);
-        printer.println(`ASIENTO       : ${body.seat}`);
-        printer.println(`IMPORTE       : S/ ${body.total}`);
+        printer.println(`F. EMBARQUE: ${embark_date}`);
+        printer.println(`H. EMBARQUE: ${embark_time}`);
+        printer.println(`ASIENTO    : ${body.seat}`);
+        printer.println(`IMPORTE    : S/ ${body.total}`);
         printer.setTextNormal();
 
         printer.println(printLines());
