@@ -1166,7 +1166,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`DESTINO       : ${body.arrival}`);
         printer.println(`FECHA VIAJE   : ${body.departure_date}`);
         printer.println(`HORA VIAJE    : ${body.schedule_hour}`);
-        let embark_time = (embark_time.date).split(' ')[1].split('.')[0];
+        let embark_time = (body.embark_time.date).split(' ')[1].split('.')[0];
         embark_time = formatHourString(embark_time);
         let embark_date = body.next_day === 'true' ? formatDateString(body.departure_date) : body.departure_date;
         printer.println(`FECHA EMBARQUE: ${embark_date}`);
