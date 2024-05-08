@@ -1161,7 +1161,6 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(printLines());
         printer.alignLeft();
         //printer.setTextDoubleHeight();                      // Set text to double height
-        printer.setTextDoubleWidth();
         printer.println(`ORIGEN     : ${body.departure}`);
         printer.println(`DESTINO    : ${body.arrival}`);
         printer.println(`FECHA VIAJE: ${body.departure_date}`);
