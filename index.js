@@ -2394,7 +2394,7 @@ function formatDateString(inputTime){
 
 function printNow() {
     // Input date string
-    const d = new Date();
+    const currentDate = new Date();
 
 
     // Get the new day, month, and year values
