@@ -1937,6 +1937,7 @@ app.post('/logistics/budget', (req, res) => {
         printer.println(" ")
         printer.println(printLines()); //------------------------------------------
         printer.println(`RECIBO DE INGRESOS/EGRESOS`);
+        printer.println(`Fecha y hora: ${printNow()}`)
         printer.println(printLines()); //------------------------------------------
         printer.println(`${i.serie}-${i.number}`);
         printer.setTextNormal();
