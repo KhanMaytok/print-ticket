@@ -2406,5 +2406,5 @@ function printNow() {
     const time =  Intl.DateTimeFormat('en-US', timeOptions).format(new Date());
 
     // Format the new date in the same format as the input date
-    return `${newdayDay}/${month}/${year} ${time}`;
+    return `${day}/${month}/${year} ${time}`;
 }
