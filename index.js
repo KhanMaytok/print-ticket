@@ -1811,6 +1811,7 @@ app.post('/money-transfer/', (req, res) => {
         printer.println(`PUNTO DE EMISIÓN: ${body.current_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(`Telf. ${body.enterprise_telephone || ''}`);
+        printer.println(`Fecha y hora: ${printNow()}`)
         printer.println(printLines());
 
         printer.println('GIRO - TRANSFERENCIA DE DINERO');
@@ -2388,4 +2389,21 @@ function formatDateString(inputTime){
 
     // Format the new date in the same format as the input date
     return `${newDay}/${newMonth}/${newYear}`;
+}
+
+function printNow() {
+    // Input date string
+    const d = new Date();
+
+
+    // Get the new day, month, and year values
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1; // Month is 0-based, so add 1
+    const year = currentDate.getFullYear();
+
+    const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+    const time =  Intl.DateTimeFormat('en-US', timeOptions).format(new Date());
+
+    // Format the new date in the same format as the input date
+    return `${newdayDay}/${month}/${year} ${time}`;
 }
