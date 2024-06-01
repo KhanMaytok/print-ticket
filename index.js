@@ -2021,7 +2021,7 @@ app.post('/encomiendas/', (req, res) => {
         printer.alignLeft();
         // MENSAJERO
         printer.println(printLines()); //------------------------------------------
-        if ('sender_2' in body) {
+        if (body.sender_2_id != null) {
             printer.println(`MENSAJERO         : ${body.sender_2}`);
             printer.println(`DNI               : ${body.sender_2_id}`);
         }
@@ -2029,7 +2029,7 @@ app.post('/encomiendas/', (req, res) => {
         // REMITENTE
         printer.println(printLines()); //------------------------------------------
         printer.println(`REMITENTE         : ${body.sender}`);
-        printer.println(`DNI/RUC           : ${body.sender_id}`);
+        printer.println(`DNI/RUC           : ${body.sender_2_id}`);
         // CONSIGNADO
         printer.println(printLines()); //------------------------------------------
         printer.println(`CONSIGNADO        : ${body.receiver}`);
@@ -2037,10 +2037,18 @@ app.post('/encomiendas/', (req, res) => {
 
         // CONSIGNADO 2
         printer.println(printLines()); //------------------------------------------
-        if ('receiver_2' in body) {
+        if (body.receiver_2_id != null) {
             printer.println(`CONSIGNADO        : ${body.receiver_2}`);
             printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
         }
+        printer.println(printLines()); //------------------------------------------
+        // CLIENTE REAL
+        printer.bold(true);
+        printer.println(`CLIENTE`);
+        printer.bold(false);
+        printer.println(`DNI/RUC           : ${body.customer_id}`);
+        printer.println(`NOMBRE/RAZ. SOCIAL: ${body.customer}`);
+
         printer.println(`Teléfono          : ${cellphone}`);
         printer.println(printLines()); //------------------------------------------
         printer.println(`TIPO              : ENCOMIENDA`);
