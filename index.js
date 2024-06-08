@@ -1167,7 +1167,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`HORA VIAJE : ${body.schedule_hour}`);
         let embark_time = (body.embark_time.date).split(' ')[1].split('.')[0];
         embark_time = formatHourString(embark_time);
-        let embark_date = body.next_day === 'true' ? formatDateString(body.departure_date) : body.departure_date;
+        let embark_date = formatEmbarkDate(body.next_day, body.departure_date);
         printer.println(`F. EMBARQUE: ${embark_date}`);
         printer.println(`H. EMBARQUE: ${embark_time}`);
         printer.println(`ASIENTO    : ${body.seat}`);
@@ -2378,22 +2378,20 @@ function formatHourString(inputTime){
     return new Intl.DateTimeFormat('en-US', timeOptions).format(formattedTime);
 }
 
-function formatDateString(inputTime){
-    // Input date string
-    const inputDate = '31/5/2024';
-
-    // Split the date string into day, month, and year
-    const [day, month, year] = inputDate.split('/');
+function formatEmbarkDate(nextDay, input){
+    // 
+    const date = input.date.split(' ')[0];
 
     // Create a new Date object and set the date to the input date
-    const currentDate = new Date(`${year}-${month}-${day}`);
+    const currentDate = new Date(date);
 
-    // Add one day to the date
-    currentDate.setDate(currentDate.getDate() + 1);
+    if(body.next_day === 'true' || body.next_day === true){
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
 
     // Get the new day, month, and year values
-    const newDay = currentDate.getDate();
-    const newMonth = currentDate.getMonth() + 1; // Month is 0-based, so add 1
+    const newDay = `${currentDate.getDate()}`.padStart(2, '0');
+    const newMonth = `${currentDate.getMonth() + 1}`.padStart(2, '0'); // Month is 0-based, so add 1
     const newYear = currentDate.getFullYear();
 
     // Format the new date in the same format as the input date
