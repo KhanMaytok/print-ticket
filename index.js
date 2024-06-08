@@ -2385,7 +2385,7 @@ function formatEmbarkDate(nextDay, input){
     // Create a new Date object and set the date to the input date
     const currentDate = new Date(date);
 
-    if(body.next_day === 'true' || body.next_day === true){
+    if(next_day === 'true' || next_day === true){
         currentDate.setDate(currentDate.getDate() + 1);
     }
 
