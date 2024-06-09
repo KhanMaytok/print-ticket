@@ -2487,11 +2487,10 @@ function formatHourString(inputTime){
 }
 
 function formatEmbarkDate(nextDay, input){
-    // 
-    const date = input.date.split(' ')[0];
+    const [day, month, year] = input.split('/');
 
     // Create a new Date object and set the date to the input date
-    const currentDate = new Date(date);
+    const currentDate = new Date(`${year}-${month}-${day}`);
 
     if(nextDay === 'true' || nextDay === true){
         currentDate.setDate(currentDate.getDate() + 1);
