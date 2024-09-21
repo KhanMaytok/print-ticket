@@ -2760,7 +2760,7 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
     });
 })
 
-app.post('/grt/20529682248', (req, res) => {
+app.post('/grt/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
     let body = req.body;
     console.log(body);
     if (typeof (body) === "string") {
