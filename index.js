@@ -2760,6 +2760,81 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
     });
 })
 
+app.post('/grt/20529682248', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    printer.printImage(logo).then(function (done) {
+        body = body.invoice
+        console.log(body.items);
+        printer.println(" ")
+        printer.println(" ")
+        printer.alignCenter();
+        printer.bold(true)
+        printer.println("EMPRESA DE TRANSPORTES DE PASAJEROS EL CRUCERO DE JAEN SOCIEDAD ANONIMA CERRADA");
+        printer.bold(false)
+        printer.println("AV. MESONES MURO NRO. 642 SEC. AROMO ALTO CAJAMARCA - JAEN - JAEN")
+        printer.println(`RUC 20529682248`);
+        printer.println('Ventas whatsapp: 977726252');
+        printer.println('Atención al cliente: 980 845 273 - 963 450 965');
+        printer.println(" ")
+        printer.println(" ")
+        printer.bold(true)
+        printer.println("GUÍA DE REMISIÓN ELECTRÓNICA")
+        printer.println("TRANSPORTISTA")
+        printer.println(`${body.serie}-${body.number}`)
+        printer.bold(false)
+        printer.alignLeft();
+        printer.println(`Fecha emisión: ${body.created_at}`)
+        printer.println(`Fecha traslado: ${body.departure_at}`)
+        
+        printer.println(" ")
+
+        printer.println(`PUNTO DE PARTIDA: ${body.departure_address}`)
+        printer.println(`PUNTO DE LLEGADA: ${body.arrival_address}`)
+
+        printer.println(" ")
+
+        printer.println("DATOS DEL REMITENTE:")
+        printer.println(`Nombre/Raz. Social: ${sender}`)
+        printer.println(`DNI/RUC: ${sender_document_number}`)
+
+        printer.println(" ")
+
+        printer.println("DATOS DEL DESTINATARIO:")
+        printer.println(`Nombre/Raz. Social: ${receiver}`)
+        printer.println(`DNI/RUC: ${receiver_document_number}`)
+
+        printer.println(" ")
+
+        printer.println("BIENES POR TRANSPORTAR")
+        body.items.map(function (e) {
+            printer.table([e.quantity, e.name, e.total]);
+        })
+
+        printer.println(" ")
+
+        printer.println("DATOS DE LOS VEHÍCULOS")
+        printer.println(`Vehículo principal: ${registration}`)
+        printer.println(`DATOS DE LOS CONDUCTORES`)
+        printer.println(`Principal: ${driver_name}`)
+        printer.println(`Licencia: ${driver_license}`)
+
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        printer.clear();
+        res.send('<h1>UNO SAN</h1>');
+    });
+})
+
 function printLines() {
     let paperWidth = printer.getWidth();
     let lines = "";
