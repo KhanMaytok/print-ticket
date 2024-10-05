@@ -377,7 +377,7 @@ app.post('/ticket/invoice/20612671720', (req, res) => { // SIBERIANO - 206126717
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telf. 925 193 119 - 942 097 541`);
+        printer.println(`Telf. 925 193 119 - 917 440 001`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
