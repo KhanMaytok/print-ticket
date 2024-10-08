@@ -2896,7 +2896,10 @@ function formatHourString(inputTime){
     return new Intl.DateTimeFormat('en-US', timeOptions).format(formattedTime);
 }
 
-function formatEmbarkDate(nextDay, input){
+function formatEmbarkDate(nextDay, input) {
+    if(nextDay === 'false' || nextDay === false) {
+        return input;
+    }
     const [day, month, year] = input.split('/');
 
     // Create a new Date object and set the date to the input date
