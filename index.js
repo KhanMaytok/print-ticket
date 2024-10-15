@@ -1544,6 +1544,12 @@ app.post('/ticket/invoice/20600308883', (req, res) => { // CHOTA EXPRESS - 20600
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. 20600308883`);
+        printer.println(`Chiclayo - Chota - 943818749`);
+        printer.println(`Chota - Chiclayo - 954956993`);
+        printer.println(`Chota - Cajamarca - 941931014`);
+        printer.println(`Cajamarca - Chota - 948211532`);
+        printer.println(`Chota - Cutervo - 954956993`);
+        printer.println(`Cutervo - Chota - 905479262`);
         printer.println(printLines());
         printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
         // printer.println(`Atención al cliente: 980 845 273 - 963 450 965`);
