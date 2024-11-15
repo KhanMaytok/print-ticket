@@ -1724,7 +1724,18 @@ app.post('/ticket/invoice/20604329036', (req, res) => { // VIA EN BUS - 20604329
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
-
+        printer.alignCenter();
+        printer.println(`1- El boleto es personal intransferible y válido para viajar en la fecha y hora indicada.`);
+        printer.println(`2- El pasajero podrá partir libre de pago hasta 20 kilos de equipaje Maletas y maletines pasado los 20 kilos pagará exceso de equipaje.`);
+	    printer.println(`3- El pasajero viaja amparado por el seguro obligatorio de accidentes de tránsito SOAT.`);
+        printer.println(`4- La empresa no responde por la perdida de equipaje en salón del bus.`);
+	    printer.println(`5- Las postergaciones de viaje serán aceptadas con 3 horas de anticipación.`);
+        printer.println(`6- Niños mayores de 5 años pagan su pasaje completo.`);
+	    printer.println(`7- El pasajero deberá estar en la oficina de embarque 1 hora de anticipación. Al no estar perderá su pasaje sin lugar a reclamo.`);
+        printer.println(`8- Está prohibió viajar con armas de fuego o pnzcortantes.`);
+	    printer.println(`9- Prohibido viajar bajo efecto de alcohol o drogas. Perderá su boleto de viaje sin reclamo alguno.`);
+        printer.alignCenter();
+        //printer.printQR(`${body.ticket_id}`)
         printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
 
