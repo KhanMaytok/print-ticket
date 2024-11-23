@@ -1291,7 +1291,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`POLIZA N°: ${body.soat}`);
         printer.println("PRESENTARSE 30 MINUTOS ANTES DE LA HORA DE EMBARQUE");
         printer.println("TODO PASAJERO TIENE DERECHO A LLEVAR 20 KILOS DE EQUIPAJE DE MANO");
-
+	printer.println("DESCARGA TU COMPROBANTE EN: https://www.angeldivinobus.com.pe/mis-comprobantes/");
         printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
 
