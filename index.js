@@ -1216,13 +1216,13 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.bold(true)
         printer.println(`${body.enterprise_name}`);
         printer.bold(false)
-        printer.println(`Calle Nicolás de Pierola 720 Urbanización Campodonico Chiclayo - Lambayeque`)
+        printer.println(`Calle Nicolás de Pierola 720 URB.Campodonico- Chiclayo`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(`Telf. ${body.enterprise_telephone || ''}`);
         printer.println(printLines());
 
-        let invoice_type = "BOLETA ELECTRÓNICA"
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
             invoice_type = "FACTURA ELECTRÓNICA";
         }
@@ -1247,6 +1247,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.alignLeft();
         printer.println(`FECHA EMISION: ${body.buy_date}`);
         printer.println(`ATENDIDO POR : ${body.seller}`);
+	printer.println(`OFICINA: ${body.seller_agency}`)
         printer.println(printLines());
         if (body.enterprise_client_id !== "0") {
             printer.println(`RAZÓN SOCIAL: ${body.enterprise_client}`);
