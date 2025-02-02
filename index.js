@@ -2209,7 +2209,7 @@ app.post('/ticket/invoice/20602391982', (req, res) => { // TOURS ILUCAN - 203954
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-        printer.println(`Telf. ${body.enterprise_telephone || ''}`);
+        printer.println(`Venta internet autorizados: 958842029 - Chiclayo | 954909021 - Chiclayo | 942057662 - Chiclayo`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA ELECTRÓNICA"
@@ -2270,12 +2270,15 @@ app.post('/ticket/invoice/20602391982', (req, res) => { // TOURS ILUCAN - 203954
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
-        printer.println(`FORMA DE PAGO: ${forma_pago}`);
+      	printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
-
-        printer.alignCenter();
+        printer.println(`ASEGURADO CON: ${body.soat_provider}`);
+        printer.println(`POLIZA N°: ${body.soat}`);
+        printer.println("PRESENTARSE 30 MINUTOS ANTES DE LA HORA DE EMBARQUE");
+        printer.println("TODO PASAJERO TIENE DERECHO A LLEVAR 20 KILOS DE EQUIPAJE DE MANO");
+	printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
 
         if (client_data.client_data.print_bottom === true) {
