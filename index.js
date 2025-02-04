@@ -1604,7 +1604,7 @@ app.post('/ticket/invoice/20600308883', (req, res) => { // CHOTA EXPRESS - 20600
         printer.println(`ASIENTO    : ${body.seat}`);
         printer.println(`IMPORTE    : S/ ${body.total}`);
         printer.setTextNormal();
-        printer.println(`Observaciones : ${body.additional_info}`);
+        printer.println(`Observaciones : ${body.observation}`);
 
         printer.println(printLines());
         printer.alignCenter();
