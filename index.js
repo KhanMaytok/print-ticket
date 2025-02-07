@@ -2000,7 +2000,7 @@ app.post('/courier/shipping-order/20529682248', (req, res) => { // CRUCERO JAEN 
         printer.bold(false)
         const arrival = body.final_arrival === null || body.final_arrival === '' ? body.arrival : body.final_arrival;
         printer.println(`${arrival.toUpperCase()} - ${body.arrival_district.toUpperCase()}`)
-        printer.println('Ventas whatsapp: 977726252');
+        printer.println('Ventas whatsapp: ');
         printer.println('Atención al cliente: 980 845 273 - 963 450 965');
         
         let invoice_type = "GUIA DE REMISION DE TRANSPORTISTA"
