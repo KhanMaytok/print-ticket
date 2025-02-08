@@ -1772,7 +1772,7 @@ app.post('/ticket/invoice/20491796856', (req, res) => { //EZAPE - 20491796856
         printer.bold(false)
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
-        printer.println(`R.U.C. 20604329036`);
+        printer.println(`R.U.C. 20491796856`);
         printer.println(printLines());
         printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
         // printer.println(`Atención al cliente: 980 845 273 - 963 450 965`);
