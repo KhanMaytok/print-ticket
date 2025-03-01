@@ -2667,9 +2667,9 @@ app.post('/encomiendas/', (req, res) => {
         printer.println(printLines());
         let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
 
-        let invoice_type = "BOLETA ELECTRÓNICA"
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
         if (parseInt(body.document_type) === 6) {
-            invoice_type = "FACTURA ELECTRÓNICA";
+            invoice_type = "FACTURA DE VENTA ELECTRÓNICA";
         }
         if (body.serie.startsWith('V')) {
             invoice_type = "CONSTANCIA DE VENTA"
@@ -2735,6 +2735,8 @@ app.post('/encomiendas/', (req, res) => {
         printer.println(`TOTAL            : ${body.total}`);
         printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
+	let letras = numeroALetras(parseFloat(body.subtotal),
+	let letras = numeroALetras(parseFloat(body.igv),
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
             singular: 'dólar estadounidense',
@@ -2793,9 +2795,9 @@ app.post('/courier/20395419715', (req, res) => { // TOURS ANGEL DIVINO 203954197
         printer.println(printLines());
         let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
 
-        let invoice_type = "BOLETA ELECTRÓNICA"
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
         if (parseInt(body.document_type) === 6) {
-            invoice_type = "FACTURA ELECTRÓNICA";
+            invoice_type = "FACTURA DE VENTA ELECTRÓNICA";
         }
         if (body.serie.startsWith('V')) {
             invoice_type = "CONSTANCIA DE VENTA"
@@ -3034,9 +3036,9 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
         const arrival = body.final_arrival === null || body.final_arrival === '' ? body.arrival : body.final_arrival;
         printer.println(`${arrival.toUpperCase()} - ${body.arrival_district.toUpperCase()}`)
         
-        let invoice_type = "BOLETA ELECTRÓNICA"
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
         if (parseInt(body.document_type) === 6) {
-            invoice_type = "FACTURA ELECTRÓNICA";
+            invoice_type = "FACTURA DE VENTA ELECTRÓNICA";
         }
         if (body.serie.startsWith('V')) {
             invoice_type = "CONSTANCIA DE VENTA"
@@ -3090,7 +3092,7 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
         printer.println(`OBSERVACIONES`);
         printer.println(body.observations);
         printer.alignCenter();
-        printer.println(`TOTAL: ${body.total}`);
+	printer.println(`TOTAL: ${body.total}`);
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
             singular: 'dólar estadounidense',
