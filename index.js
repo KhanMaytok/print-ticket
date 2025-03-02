@@ -2735,9 +2735,7 @@ app.post('/encomiendas/', (req, res) => {
         printer.println(`TOTAL            : ${body.total}`);
         printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
-	let letras = numeroALetras(parseFloat(body.subtotal),
-	let letras = numeroALetras(parseFloat(body.igv),
-        let letras = numeroALetras(parseFloat(body.total), {
+	let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
             singular: 'dólar estadounidense',
             centPlural: 'centavos',
