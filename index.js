@@ -2732,7 +2732,9 @@ app.post('/encomiendas/', (req, res) => {
             printer.println(`SUBTOTAL            : ${body.subtotal}`);
             printer.println(`IGV            : ${body.igv}`);
         }
-        printer.println(`TOTAL            : ${body.total}`);
+        printer.println(`SUBTOTAL: ${body.subtotal}`);
+        printer.println(`IGV: ${body.igv}`);
+        printer.println(`TOTAL: ${body.total}`);
         printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
 	let letras = numeroALetras(parseFloat(body.total), {
@@ -2858,7 +2860,9 @@ app.post('/courier/20395419715', (req, res) => { // TOURS ANGEL DIVINO 203954197
             printer.println(`SUBTOTAL            : ${body.subtotal}`);
             printer.println(`IGV            : ${body.igv}`);
         }
-        printer.println(`TOTAL            : ${body.total}`);
+        printer.println(`SUBTOTAL: ${body.subtotal}`);
+        printer.println(`IGV: ${body.igv}`);
+        printer.println(`TOTAL: ${body.total}`);
         printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
         let letras = numeroALetras(parseFloat(body.total), {
@@ -2980,6 +2984,8 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(`(Cobertura no aplicable si el daño sufrido fue propio del mal embalaje)`);
         printer.println(`Recibido sin verificación de contenido`);
         printer.alignCenter();
+        printer.println(`SUBTOTAL: ${body.subtotal}`);
+        printer.println(`IGV: ${body.igv}`);
         printer.println(`TOTAL: ${body.total}`);
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
@@ -3090,7 +3096,9 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
         printer.println(`OBSERVACIONES`);
         printer.println(body.observations);
         printer.alignCenter();
-	printer.println(`TOTAL: ${body.total}`);
+	    printer.println(`SUBTOTAL: ${body.subtotal}`);
+        printer.println(`IGV: ${body.igv}`);
+        printer.println(`TOTAL: ${body.total}`);
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
             singular: 'dólar estadounidense',
