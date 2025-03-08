@@ -2879,7 +2879,10 @@ app.post('/courier/20395419715', (req, res) => { // TOURS ANGEL DIVINO 203954197
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
-        printer.println(printLines()); //----------------------------------
+        printer.println(`RECOMENDACIONES`);
+	printer.println(`RECOJO : DNI ORIGINAL`);
+	printer.println(`CLAVE  : 4 DIGITOS`);
+	printer.println(`PAQUETE : EMBALADO`);
         printer.alignCenter();
         printer.printQR(`${body.ticket_id}`)
         if (client_data.client_data.print_bottom === true) {
