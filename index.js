@@ -2383,8 +2383,7 @@ app.post('/ticket/invoice/20495803121', (req, res) => { // Tours Corazon E.I.R.L
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
-        printer.alignCenter();
-	printer.println(`Usted viaja asegurado (La Positiva). Póliza número ${body.soat || ""}. En caso de accidente, comuníquese al Telf. (01) 211-0-211.`);
+    	printer.println(`Usted viaja asegurado (La Positiva). Póliza número ${body.soat || ""}. En caso de accidente, comuníquese al Telf. (01) 211-0-211.`);
 	printer.println(`Bus placa N° ${body.registration}`);
 	printer.println("PRESENTARSE 30 MINUTOS ANTES DE LA HORA DE EMBARQUE");
         printer.println("TODO PASAJERO TIENE DERECHO A LLEVAR 20 KILOS DE EQUIPAJE DE MANO");
