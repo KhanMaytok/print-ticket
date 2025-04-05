@@ -2696,7 +2696,7 @@ app.post('/encomiendas/', (req, res) => {
         // REMITENTE
         printer.println(printLines()); //------------------------------------------
         printer.println(`REMITENTE         : ${body.sender}`);
-        printer.println(`DNI/RUC           : ${body.sender_2_id}`);
+        printer.println(`DNI/RUC           : ${body.sender_id}`);
         // CONSIGNADO
         printer.println(printLines()); //------------------------------------------
         printer.println(`CONSIGNADO        : ${body.receiver}`);
