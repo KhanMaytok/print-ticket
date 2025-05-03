@@ -2749,8 +2749,8 @@ app.post('/encomiendas/', (req, res) => {
         printer.bold(true);
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
-	if(invoice.operation_number) {
-	    printer.println(`NRO. OPERACIÓN: ${invoice.operation_number}`);
+	if(body.operation_number) {
+	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
 	}
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
@@ -2880,8 +2880,8 @@ app.post('/courier/20395419715', (req, res) => { // TOURS ANGEL DIVINO 203954197
         printer.bold(true);
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
-	if(invoice.operation_number) {
-	    printer.println(`NRO. OPERACIÓN: ${invoice.operation_number}`);
+	if(body.operation_number) {
+	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
 	}
         printer.bold(false);
         printer.println(`RECOMENDACIONES`);
@@ -2995,8 +2995,8 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
         printer.println(`SUBTOTAL: ${body.subtotal}`);
         printer.println(`IGV: ${body.igv}`);
         printer.println(`TOTAL: ${body.total}`);
-	if(invoice.operation_number) {
-	    printer.println(`NRO. OPERACIÓN: ${invoice.operation_number}`);
+	if(body.operation_number) {
+	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
 	}
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
@@ -3110,8 +3110,8 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
 	    printer.println(`SUBTOTAL: ${body.subtotal}`);
         printer.println(`IGV: ${body.igv}`);
         printer.println(`TOTAL: ${body.total}`);
-	if(invoice.operation_number) {
-	    printer.println(`NRO. OPERACIÓN: ${invoice.operation_number}`);
+	if(body.operation_number) {
+	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
 	}
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
