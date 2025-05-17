@@ -3112,6 +3112,19 @@ app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 206050
         printer.println(`TOTAL: ${body.total}`);
 	if(body.operation_number) {
 	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
+	printer.println(`DECLARACIÓN JURADA DE TRANSPORTE`)
+        printer.println(`En mérito a la Ley del Procedimiento Administrativo General, Ley Nº 27444; declaro que las mercancías amparadas en el presente comprobante, están siendo transportadas bajo mi cuenta y riesgo.`)
+        printer.println(`Declaro bajo juramento que los presentes datos obedecen a la verdad, sometiéndome a las sanciones administrativas, civiles y penales que correspondan en caso de falsedad de los mismos.`)
+	printer.println(`-----------------------`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-                     -`)
+	printer.println(`-----------------------`)
 	}
         let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
