@@ -2886,6 +2886,13 @@ app.post('/courier/20608151771', (req, res) => {
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
 
+        printer.println('DECLARACIÓN JURADA DE TRANSPORTE');
+        printer.println(`En mérito a la Ley del Procedimiento Administrativo General, 
+                        Ley Nº 27444; declaro que las mercancías amparadas en el presente 
+                        comprobante, están siendo transportadas bajo mi cuenta y riesgo.
+                        Declaro bajo juramento que los presentes datos obedecen a la verdad, 
+                        sometiéndome a las sanciones administrativas, civiles y penales que 
+                        correspondan en caso de falsedad de los mismos.`);
         printer.println(`USTED ESTÁ ACEPTANDO LAS  +----------+`);
         printer.println(`CONDICIONES DE ENVIO      |          |`);
         printer.println(`DEL COMPROBANTE QUE       |          | `);
