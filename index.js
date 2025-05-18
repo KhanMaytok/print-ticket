@@ -1219,7 +1219,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`Calle Nicolás de Pierola 720 URB.Campodonico- Chiclayo`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-	printer.println(`Venta internet autorizados: 958842029 - Chiclayo | 954909021 - Chiclayo | 942057662 - Chiclayo`);
+	    printer.println(`Venta internet autorizados: 958842029 - Chiclayo | 954909021 - Chiclayo | 942057662 - Chiclayo`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
@@ -1247,7 +1247,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.alignLeft();
         printer.println(`FECHA EMISION: ${body.buy_date}`);
         printer.println(`ATENDIDO POR : ${body.seller}`);
-	printer.println(`OFICINA: ${body.seller_agency}`)
+        printer.println(`OFICINA: ${body.seller_agency}`)
         printer.println(printLines());
         if (body.enterprise_client_id !== "0") {
             printer.println(`RAZÓN SOCIAL: ${body.enterprise_client}`);
@@ -2774,6 +2774,151 @@ app.post('/encomiendas/', (req, res) => {
     });
 })
 
+app.post('/courier/20608151771', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    printer.printImage(logo).then(function (done) {
+        body = body.invoice
+        const cellphone = body.cellphone === '' ? '-' : body.cellphone;
+        console.log(body.items);
+        printer.println(" ")
+        printer.println(" ")
+        printer.alignCenter();
+        printer.bold(true)
+        printer.println(body.enterprise_name);
+        printer.bold(false)
+        printer.println(body.enterprise_address)
+        printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
+        printer.println(`R.U.C. ${body.enterprise_ruc}`);
+        printer.println(`Telf. ${body.enterprise_telephone || ''}`);
+        printer.println(printLines());
+        let arrival = body.final_arrival === '' ? body.arrival : body.final_arrival;
+
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
+        if (parseInt(body.document_type) === 6) {
+            invoice_type = "FACTURA DE VENTA ELECTRÓNICA";
+        }
+        if (body.serie.startsWith('V')) {
+            invoice_type = "CONSTANCIA DE VENTA"
+        }
+
+        printer.println(`${invoice_type}`);
+        printer.setTextDoubleHeight();
+        printer.setTextDoubleWidth();
+        printer.println(`${body.serie}`);
+        printer.setTextNormal();
+        printer.alignLeft();
+        printer.println(`FECHA EMISION     : ${body.created_at}`);
+        printer.println(`ATENDIDO POR      : ${body.seller}`);
+        printer.println(printLines()); //------------------------------------------
+        printer.alignCenter();
+        printer.println(`DATOS DE ENVIO`);
+        printer.alignLeft();
+        // MENSAJERO
+        printer.println(printLines()); //------------------------------------------
+        if (body.sender_2_id != null) {
+            printer.println(`MENSAJERO         : ${body.sender_2}`);
+            printer.println(`DNI               : ${body.sender_2_id}`);
+        }
+
+        // REMITENTE
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`REMITENTE         : ${body.sender}`);
+        printer.println(`DNI/RUC           : ${body.sender_id}`);
+        // CONSIGNADO
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`CONSIGNADO        : ${body.receiver}`);
+        printer.println(`DNI/RUC           : ${body.receiver_id}`);
+
+        // CONSIGNADO 2
+        printer.println(printLines()); //------------------------------------------
+        if (body.receiver_2_id != null) {
+            printer.println(`CONSIGNADO        : ${body.receiver_2}`);
+            printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
+        }
+        printer.println(printLines()); //------------------------------------------
+        // CLIENTE REAL
+        printer.bold(true);
+        printer.println(`CLIENTE`);
+        printer.bold(false);
+        printer.println(`DNI/RUC           : ${body.customer_id}`);
+        printer.println(`NOMBRE/RAZ. SOCIAL: ${body.customer}`);
+
+        printer.println(`Teléfono          : ${cellphone}`);
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`TIPO              : ENCOMIENDA`);
+        printer.println(`ORIGEN            : ${body.departure}`);
+        printer.println(`DESTINO           : ${arrival}`);
+        printer.println(`ITEMS        :`);
+        body.items.map(function (e) {
+            printer.table([e.quantity, e.name, e.total]);
+        })
+
+        printer.println(printLines()); //------------------------------------------
+        if (parseInt(body.document_type) === 6) {
+            printer.println(`SUBTOTAL            : ${body.subtotal}`);
+            printer.println(`IGV            : ${body.igv}`);
+        }
+        printer.println(`SUBTOTAL: ${body.subtotal}`);
+        printer.println(`IGV: ${body.igv}`);
+        printer.println(`TOTAL: ${body.total}`);
+        printer.println(printLines()); //------------------------------------------
+        printer.alignCenter();
+	let letras = numeroALetras(parseFloat(body.total), {
+            plural: 'dólares estadounidenses',
+            singular: 'dólar estadounidense',
+            centPlural: 'centavos',
+            centSingular: 'centavo'
+        });
+
+        printer.println(`SON: ${letras}`);
+        printer.alignLeft();
+        printer.println(printLines()); //----------------------------------
+        printer.bold(true);
+        const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        printer.println(`FORMA DE PAGO: ${forma_pago}`);
+	if(body.operation_number) {
+	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
+	}
+        printer.bold(false);
+        printer.println(printLines()); //----------------------------------
+
+        printer.println(`USTED ESTÁ ACEPTANDO LAS  +----------+`);
+        printer.println(`CONDICIONES DE ENVIO      |          |`);
+        printer.println(`DEL COMPROBANTE QUE       |          | `);
+        printer.println(`SE LE ENTREGÓ             |          |`);
+        printer.println(`                          |          |`);
+        printer.println(`                          |          |`);
+        printer.println(`                          |          |`);
+        printer.println(`                          |          |`);
+        printer.println(`                          |          |`);
+        printer.println(`_______________________   |          |`);
+        printer.println(`FIRMA Y HUELLA DIGITAL    |          |`);
+        printer.println(`DNI                       +----------+`);
+
+        printer.alignCenter();
+        printer.printQR(`${body.ticket_id}`)
+        if (client_data.client_data.print_bottom === true) {
+            printer.println(client_data.client_data.bottom_text)
+        }
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`${body.invoice_footer || ''}`);
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        printer.clear();
+        res.send('<h1>UNO SAN</h1>');
+    });
+})
+
 app.post('/courier/20395419715', (req, res) => { // TOURS ANGEL DIVINO 20395419715
     let body = req.body;
     console.log(body);
@@ -2880,14 +3025,14 @@ app.post('/courier/20395419715', (req, res) => { // TOURS ANGEL DIVINO 203954197
         printer.bold(true);
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
-	if(body.operation_number) {
-	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
-	}
+        if(body.operation_number) {
+            printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
+        }
         printer.bold(false);
         printer.println(`RECOMENDACIONES`);
-	printer.println(`RECOJO : DNI ORIGINAL`);
-	printer.println(`CLAVE  : 4 DIGITOS`);
-	printer.println(`PAQUETE : EMBALADO`);
+        printer.println(`RECOJO : DNI ORIGINAL`);
+        printer.println(`CLAVE  : 4 DIGITOS`);
+        printer.println(`PAQUETE : EMBALADO`);
         printer.alignCenter();
         printer.printQR(`${body.ticket_id}`)
         if (client_data.client_data.print_bottom === true) {
