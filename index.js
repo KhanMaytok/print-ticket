@@ -2913,6 +2913,8 @@ app.post('/courier/20608151771', (req, res) => {
         if (client_data.client_data.print_bottom === true) {
             printer.println(client_data.client_data.bottom_text)
         }
+	printer.println('Verifique las condiciones condiciones generales del servicio al reverso del comprobante');
+	printer.println('¡Gracias por su preferencia ANGEL DIVINO más cerca de Ud….!');
         printer.println(printLines()); //------------------------------------------
         printer.println(`${body.invoice_footer || ''}`);
         printer.partialCut();
