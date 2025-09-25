@@ -3289,7 +3289,121 @@ app.post('/courier/20529682248', (req, res) => { // CRUCERO JAEN - 20529682248
     });
 })
 
+app.post('/courier/20529682248', (req, res) => { // LINEBUS - 20614485168
+    let body = req.body;
+    console.log(body);
+    if (typeof (body) === "string") {
+        body = JSON.parse(body);
+    }
+    printer.printImage(logo).then(function (done) {
+        body = body.invoice
+        const cellphone = body.cellphone === '' ? '-' : body.cellphone;
+        printer.println(" ")
+        printer.alignCenter();
+        printer.println("TRANSPORTES LINEBUS S.A.C.")
+        printer.println("RUC: 20614485168")
+        printer.println("MZA. C LOTE. 01 P.J. JUAN PABLO PEREGRINO")
+        printer.bold(true)
+        printer.println(`${body.serie}`);
+        printer.bold(false)
+        const arrival = body.final_arrival === null || body.final_arrival === '' ? body.arrival : body.final_arrival;
+        printer.println(`${arrival.toUpperCase()} - ${body.arrival_district.toUpperCase()}`)
+        printer.println('---');
+        
+        let invoice_type = "BOLETA ELECTRÓNICA"
+        if (parseInt(body.document_type) === 6) {
+            invoice_type = "FACTURA ELECTRÓNICA";
+        }
+        if (body.serie.startsWith('V')) {
+            invoice_type = "CONSTANCIA DE VENTA"
+        }
+        printer.println(`${invoice_type}`);
+        printer.alignLeft();
+        printer.println(`FECHA EMISION     : ${body.created_at}`);
+        printer.println(`FECHA TRANSLADO   : ${body.created_at}`);
+        printer.println(`ORIGEN            : ${body.seller_agency}`)
+        printer.println(`DESTINO           : ${body.arrival}`)
+        printer.println(printLines()); //------------------------------------------
+        printer.println(printLines()); //------------------------------------------
+        printer.alignCenter();
+        printer.println(`DATOS DEL REMITENTE`)
+        printer.alignLeft();
+        // MENSAJERO
+        if ('sender_2' in body) {
+            printer.println(`MENSAJERO         : ${body.sender_2}`);
+            printer.println(`DNI               : ${body.sender_2_id}`);
+        }
+ 
+        // REMITENTE
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`REMITENTE         : ${body.sender}`);
+        printer.println(`DNI/RUC           : ${body.sender_id}`);
+        printer.println(`Teléfono          : ${cellphone}`);
+        printer.alignCenter();
+        printer.println(printLines()); //------------------------------------------
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`DATOS DEL DESTINATARIO`)
+        printer.alignLeft();
+        // CONSIGNADO
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`CONSIGNADO        : ${body.receiver}`);
+        printer.println(`DNI/RUC           : ${body.receiver_id}`);
+ 
+        // CONSIGNADO 2
+        printer.println(printLines()); //------------------------------------------
+        if ('receiver_2' in body) {
+            printer.println(`CONSIGNADO        : ${body.receiver_2}`);
+            printer.println(`DNI/RUC           : ${body.receiver_2_id}`);
+        }
+        printer.println(printLines()); //------------------------------------------
+        printer.println(`ENTREGA`);
+        printer.println(`DIRECCIÓN: ENTREGAR EN AGENCIA`);
+        const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
+        printer.println(`FORMA DE PAGO: ${forma_pago}`);
+        body.items.map(function (e) {
+            printer.table([e.quantity, e.name, e.total]);
+        })
+        printer.println(`OBSERVACIONES`);
+        printer.println(body.observations);
+        printer.println(`USTED NO CONTRATO EL SERVICIO DE GARANTIA`);
+        printer.println(`Cuenta con una COBERTURA máxima hasta 10 veces el valor del flete sobre el envío afectado.`);
+        printer.println(`(Cobertura no aplicable si el daño sufrido fue propio del mal embalaje)`);
+        printer.println(`Recibido sin verificación de contenido`);
+        printer.alignCenter();
+        printer.println(`SUBTOTAL: ${body.subtotal}`);
+        printer.println(`IGV: ${body.igv}`);
+        printer.println(`TOTAL: ${body.total}`);
+	if(body.operation_number) {
+	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
+	}
+        let letras = numeroALetras(parseFloat(body.total), {
+            plural: 'dólares estadounidenses',
+            singular: 'dólar estadounidense',
+            centPlural: 'centavos',
+            centSingular: 'centavo'
+        });
 
+        printer.println(`SON: ${letras}`);
+        printer.alignLeft();
+        printer.println(`EMBALAJE INAPROPIADO ASUMO CUALQUIER DAÑO QUE PUDIESE SUFRIR DURANTE SU TRASLADO - ${body.sender}`);
+        printer.println(`EL REMITENTE ACEPTA EL TRASLADO DEL ENVÍO PARA EL ${body.created_at}`);
+        printer.println(`IMPORTANTE`);
+        printer.println(`El remitente será responsable de la veracidad de los datos y del contenido brindados . Plazo para el retiro de envío: hasta 48 horas posteriores a su llegada . Cobro de almacenaje . Custodia máximo por 30 días posteriores a su llegada . Abandono del envío: después de los 30 días será desechado, destruido o eliminado sin reclamos posteriores. Los términos, tarifas y condiciones mencionados en el presente boleto son parte de las normas de la empresa para el servicio de encomiendas.`);
+        printer.println(`AVISO:`);
+        printer.println(`El servicio de envío de encomiendas y carga, necesita el DNI del remitente y del destinatario, así como también número de celular del remitente.`);
+
+        printer.partialCut();
+        printer.execute(function (err) {
+            if (err) {
+                console.error(`Print failed`, err);
+            } else {
+                console.log(`Print done`);
+            }
+        });
+        printer.clear();
+        res.send('<h1>UNO SAN</h1>');
+    });
+})
 
 app.post('/courier/20605002863', (req, res) => { // ENCOMIENDAS ESANTUR - 20605002863
     let body = req.body;
