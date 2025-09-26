@@ -1551,7 +1551,7 @@ app.post('/ticket/invoice/20614485168', (req, res) => { // LINEBUS - 20614485168
         printer.println(printLines());
         printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
         printer.println(`--------`);
-        let invoice_type = "BOLETA ELECTRÓNICA"
+        let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
             invoice_type = "FACTURA ELECTRÓNICA";
         }
@@ -1615,7 +1615,18 @@ app.post('/ticket/invoice/20614485168', (req, res) => { // LINEBUS - 20614485168
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
-        printer.println(`${body.invoice_footer || ''}`);
+        printer.println(`Términos y condiciones de viaje al recibir el boleto acepto todos los términos de 
+            contrato del servicio de transporte publicado en las agencias y páginas web
+            Llegar 30 minutos antes del embarque. 
+            Cada pasajero tiene derecho hasta 20kg. de equipaje libre. Postergación y/o cambios admitidos por el titular del boleto 
+            será( 3 )horas antes del viaje. Los niños mayores de (5) años pagan pasaje y ocupan un asiento. 
+            No sé venderá a menores de edad que no presenten DNI y autorización notarial de su padres cuando corresponda. 
+            La empresa no se  responsabiliza por la pérdida de equipaje en el salón, su cuidado es responsabilidad del pasajero
+            La empresa no se responsabiliza de bultos no declarados 
+            Los pasajeros viajan asegurados por la compañía de seguros SOAT; PROTECTA S. A póliza N° 7002969680
+            `);
+        printer.println(`Representación impresa de la ${invoice_type}  emitido mediante un PROVEEDOR autorizado por la SUNAT mediante 
+            Resolución de intendencia N°034_005_0005315`)
 
         printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
