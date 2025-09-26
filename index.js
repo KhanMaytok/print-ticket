@@ -3636,11 +3636,14 @@ function range(start, stop, step) {
 function getLogo() {
     try {
         if (fs.existsSync('./custom_logo.png')) {
+            console.log("EXISTE UN LOGO PERSONALIZADO");
             return './custom_logo.png'
         } else {
+            console.log("CARGANDO LOGO ESTÁNDAR");
             return './logo.png';
         }
     } catch (err) {
+        console.log("ERROR, LOGO ESTÁNDAR");
         return './logo.png';
     }
 }
