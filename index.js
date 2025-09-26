@@ -1547,8 +1547,9 @@ app.post('/ticket/invoice/20614485168', (req, res) => { // LINEBUS - 20614485168
         printer.println(`R.U.C. 20614485168`);
         printer.println(`MZA. C LOTE. 01 P.J. JUAN PABLO PEREGRINO`);
         printer.println(`LAMBAYEQUE - CHICLAYO - CHICLAYO`);
-        //printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
-        //printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
+        printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`);
+        printer.println(`DIRECCIÓN: ${body.seller_agency_address}`)
+        printer.println(`TELÉFONO: ${body.seller_agency_telephone}`);
         printer.println(`--------`);
         let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
