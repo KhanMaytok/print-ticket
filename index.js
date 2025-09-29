@@ -1543,6 +1543,7 @@ app.post('/ticket/invoice/20614485168', (req, res) => { // LINEBUS - 20614485168
         printer.alignCenter();
         printer.bold(true)
         printer.println(`TRANSPORTES LINEBUS S.A.C.`);
+		  printer.println(`JAEN BUS`);
         printer.bold(false);
         printer.println(`R.U.C. 20614485168`);
         printer.println(`MZA. C LOTE. 01 P.J. JUAN PABLO PEREGRINO`);
