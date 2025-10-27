@@ -3671,9 +3671,12 @@ function formatEmbarkDate(nextDay, input) {
 
     // Create a new Date object and set the date to the input date
     const currentDate = new Date(`${year}-${month}-${day}`);
+    console.log('La fecha actual es:', currentDate);
 
     if(nextDay === 'true' || nextDay === true){
+        console.log('Se ha marcado la fecha de embarque como día sgte.');
         currentDate.setDate(currentDate.getDate() + 1);
+        console.log('currentDate', currentDate);
     }
 
     // Get the new day, month, and year values
@@ -3682,7 +3685,9 @@ function formatEmbarkDate(nextDay, input) {
     const newYear = currentDate.getFullYear();
 
     // Format the new date in the same format as the input date
-    return `${newDay}/${newMonth}/${newYear}`;
+    const fmtDate = `${newDay}/${newMonth}/${newYear}`;
+    console.log(fmtDate);
+    return fmtDate;
 }
 
 function printNow() {
