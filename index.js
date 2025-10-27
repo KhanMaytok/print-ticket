@@ -3664,27 +3664,24 @@ function formatHourString(inputTime){
 }
 
 function formatEmbarkDate(nextDay, input) {
-    if(nextDay === 'false' || nextDay === false) {
+    if (nextDay === 'false' || nextDay === false) {
         return input;
     }
-    const [day, month, year] = input.split('/');
 
-    // Create a new Date object and set the date to the input date
-    const currentDate = new Date(`${year}-${month}-${day}`);
+    const [day, month, year] = input.split('/');
+    const currentDate = new Date(year, month - 1, day); // ✅ Construcción local
     console.log('La fecha actual es:', currentDate);
 
-    if(nextDay === 'true' || nextDay === true){
+    if (nextDay === 'true' || nextDay === true) {
         console.log('Se ha marcado la fecha de embarque como día sgte.');
         currentDate.setDate(currentDate.getDate() + 1);
         console.log('currentDate', currentDate);
     }
 
-    // Get the new day, month, and year values
     const newDay = `${currentDate.getDate()}`.padStart(2, '0');
-    const newMonth = `${currentDate.getMonth() + 1}`.padStart(2, '0'); // Month is 0-based, so add 1
+    const newMonth = `${currentDate.getMonth() + 1}`.padStart(2, '0');
     const newYear = currentDate.getFullYear();
 
-    // Format the new date in the same format as the input date
     const fmtDate = `${newDay}/${newMonth}/${newYear}`;
     console.log(fmtDate);
     return fmtDate;
