@@ -1294,7 +1294,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`POLIZA N°: ${body.soat}`);
         printer.println("PRESENTARSE 30 MINUTOS ANTES DE LA HORA DE EMBARQUE");
         printer.println("TODO PASAJERO TIENE DERECHO A LLEVAR 20 KILOS DE EQUIPAJE DE MANO");
-	printer.println("");
+	printer.println("VIVE LA MAGIA DEL CARNAVAL 2026 ADQUIRIENDO TU BOLETO CON ANTICIPACION");
 	printer.println("TENEMOS LOS MEJORES PRECIOS VISITANOS...");
 	printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
