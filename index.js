@@ -3085,24 +3085,24 @@ app.post('/courier/20608151771', (req, res) => {
         printer.println(`TIPO              : ENCOMIENDA`);
         printer.println(`ORIGEN            : ${body.departure}`);
         printer.println(`DESTINO           : ${arrival}`);
-        printer.println(`ITEMS        :`);
+        printer.println(`ITEMS             :`);
         body.items.map(function (e) {
             printer.table([e.quantity, e.name, e.total]);
         })
         const canjeado = `${body.exchanged_serie || '-'}-${body.exchanged_number || '-'}`; 
-        printer.println(`CANJEADO     : ${canjeado}`);
+        printer.println(`CANJEADO          : ${canjeado}`);
 
         printer.println(printLines()); //------------------------------------------
         if (parseInt(body.document_type) === 6) {
-            printer.println(`SUBTOTAL            : ${body.subtotal}`);
-            printer.println(`IGV            : ${body.igv}`);
+            printer.println(`SUBTOTAL          : ${body.subtotal}`);
+            printer.println(`IGV               : ${body.igv}`);
         }
-        printer.println(`SUBTOTAL: ${body.subtotal}`);
-        printer.println(`IGV: ${body.igv}`);
-        printer.println(`TOTAL: ${body.total}`);
+        printer.println(`SUBTOTAL          : ${body.subtotal}`);
+        printer.println(`IGV               : ${body.igv}`);
+        printer.println(`TOTAL             : ${body.total}`);
         printer.println(printLines()); //------------------------------------------
         printer.alignCenter();
-	let letras = numeroALetras(parseFloat(body.total), {
+	    let letras = numeroALetras(parseFloat(body.total), {
             plural: 'dólares estadounidenses',
             singular: 'dólar estadounidense',
             centPlural: 'centavos',
