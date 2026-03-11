@@ -3089,7 +3089,7 @@ app.post('/courier/20608151771', (req, res) => {
         body.items.map(function (e) {
             printer.table([e.quantity, e.name, e.total]);
         })
-        const canjeado = `${body.serie_exchanged || '-'}-${body.number_exchanged || '-'}`; 
+        const canjeado = `${body.exchanged_serie || '-'}-${body.exchanged_number || '-'}`; 
         printer.println(`CANJEADO     : ${canjeado}`);
 
         printer.println(printLines()); //------------------------------------------
