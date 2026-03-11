@@ -1295,8 +1295,8 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println("PRESENTARSE 30 MINUTOS ANTES DEL EMBARQUE");
         printer.println("TODO PASAJERO TIENE DERECHO A LLEVAR 20 KILOS DE EQUIPAJE DE MANO");
 	    printer.println(`La empresa no se responsabiliza por dinero, alhajas, objetos de valor y/o artículos de lujo no declarados en el embarque y transportados como equipaje ni por los bienes personales y/o equipajes perdidos en el salón de pasajeros y terminales.`);
-	printer.println("TENEMOS LOS MEJORES PRECIOS VISITANOS...");
-	printer.alignCenter();
+	    printer.println("TENEMOS LOS MEJORES PRECIOS VISITANOS...");
+	    printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
 
         if (client_data.client_data.print_bottom === true) {
@@ -3080,7 +3080,7 @@ app.post('/courier/20608151771', (req, res) => {
         printer.println(`DNI/RUC           : ${body.customer_id}`);
         printer.println(`NOMBRE/RAZ. SOCIAL: ${body.customer}`);
 
-        printer.println(`Teléfono          : ${cellphone}`);
+        printer.println(`TELÉFONO          : ${cellphone}`);
         printer.println(printLines()); //------------------------------------------
         printer.println(`TIPO              : ENCOMIENDA`);
         printer.println(`ORIGEN            : ${body.departure}`);
@@ -3089,6 +3089,8 @@ app.post('/courier/20608151771', (req, res) => {
         body.items.map(function (e) {
             printer.table([e.quantity, e.name, e.total]);
         })
+        const canjeado = `${body.serie_exchanged || '-'}-${body.number_exchanged || '-'}`; 
+        printer.println(`CANJEADO     : ${canjeado}`);
 
         printer.println(printLines()); //------------------------------------------
         if (parseInt(body.document_type) === 6) {
@@ -3111,11 +3113,10 @@ app.post('/courier/20608151771', (req, res) => {
         printer.alignLeft();
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
-        const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
-        printer.println(`FORMA DE PAGO: ${forma_pago}`);
-	if(body.operation_number) {
-	    printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
-	}
+        printer.println(`FORMA DE PAGO: ${(body.payment_medium || '').toUpperCase()}`);
+        if(body.operation_number) {
+            printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
+        }
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
 
