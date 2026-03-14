@@ -9,7 +9,7 @@ git commit -m "juajua"
 git fetch --all
 git reset --hard origin/node12
 git pull origin node12
-call npm install -g nodemon
+call npm install -g nodemon@2.0.22
 call npm install
 call npm install printer --msvs_version=2017  --build-from-source
 echo " _______        _       _           _        _           _       "
