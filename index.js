@@ -3113,7 +3113,9 @@ app.post('/courier/20608151771', (req, res) => {
         printer.alignLeft();
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
-        printer.println(`FORMA DE PAGO: ${(body.payment_medium || '').toUpperCase()}`);
+        if ((body.collector_id || '') !== '') {
+            printer.println(`FORMA DE PAGO: ${(body.payment_medium || '').toUpperCase()}`);
+        }
         if(body.operation_number) {
             printer.println(`NRO. OPERACIÓN: ${body.operation_number}`);
         }
