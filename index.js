@@ -3089,8 +3089,10 @@ app.post('/courier/20608151771', (req, res) => {
         body.items.map(function (e) {
             printer.table([e.quantity, e.name, e.total]);
         })
-        const canjeado = `${body.exchanged_serie || '-'}-${body.exchanged_number || '-'}`; 
-        printer.println(`CANJEADO          : ${canjeado}`);
+        const canjeado = `${body.exchanged_serie || '-'}-${body.exchanged_number || '-'}`;
+        if (canjeado !== '---') {
+            printer.println(`CANJEADO          : ${canjeado}`);
+        }
 
         printer.println(printLines()); //------------------------------------------
         if (parseInt(body.document_type) === 6) {
@@ -3113,6 +3115,8 @@ app.post('/courier/20608151771', (req, res) => {
         printer.alignLeft();
         printer.println(printLines()); //----------------------------------
         printer.bold(true);
+        const tipo = body.payment_type.toUpperCase();
+        printer.println(`TIPO: ${tipo}`);
         if ((body.collector_id || '') !== '') {
             printer.println(`FORMA DE PAGO: ${(body.payment_medium || '').toUpperCase()}`);
         }
