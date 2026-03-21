@@ -1292,8 +1292,8 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`${body.invoice_footer || ''}`);
         printer.println(`ASEGURADO CON: ${body.soat_provider}`);
         printer.println(`POLIZA N°: ${body.soat}`);
-        printer.println("Términos y condiciones de viaje");
-        printer.println("1.- El pasajero deberá presentarse 30 min antes al horario de salida del bus.");
+        printer.println(`TERMINOS Y CONDICIONES`);
+		printer.println("1.- El pasajero deberá presentarse 30 min antes al horario de salida del bus.");
 		printer.println("2.- No se permitirá el embarque de pasajeros con signos de haber ingerido alcohol. Si hay indicios, se podrá aplicar una prueba de alcoholímetro. Si es positiva, perderá el derecho a viajar y el valor del boleto.");
 		printer.println("3.- Niños partir de 5 años deberán adquirir su boleto.  Los menores deben viajar acompañados de padre o madre presentando su DNI y/o Partida de Nacimiento original.");
 	    printer.println(`Tener en cuenta lo siguiente: Menores de hasta los 14 años, deben viajar acompañados por un adulto, presentando su DNI y/o Partida de Nacimiento, así como permiso de viaje notarial y/o judicial. Menores de edad a partir de los 14 años, pueden viajar sin acompañante adulto, presentando su DNI y/o Partida de Nacimiento, así como permiso de viaje notarial o judicial según corresponda, original y vigente. `);
