@@ -1285,8 +1285,9 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.bold(true);
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
-	    printer.println(`Observaciones : ${body.observation || ''}`);
-		printer.println(`Modalidad : ${body.service_title || ''}`);
+        printer.println(`NRO. OPERACIÓN: ${body.operacion_code || ''}`);
+	    printer.println(`ONSERVACIONES : ${body.observation || ''}`);
+		printer.println(`MODALIDAD : ${body.service_title || ''}`);
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
