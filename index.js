@@ -2560,6 +2560,7 @@ app.post('/ticket/invoice/20495803121', (req, res) => { // Tours Corazon E.I.R.L
         printer.println(`${body.enterprise_address}`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
+		printer.println(`BAGUA GRANDE| 976608091`);
         printer.println(`Telf. ${body.enterprise_telephone || ''}`);
         printer.println(printLines());
 
