@@ -1299,6 +1299,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
 	    printer.println(`los niños mayores de 14 años, deben viajar acompañados por un adulto, presentando su DNI y/o Partida de Nacimiento, así como permiso de viaje notarial y/o judicial.`);
 	    printer.println("3.- El pasajero tiene derecho a transportar sin costo hasta 20K de equipaje, considerándose como tal: maletas, maletines y bolsos que contengan artículos de uso personal. (DS N 182-2013-EF, Art. 2).");
 		printer.println("4.- La empresa no se responsabiliza por dinero, alhajas, objetos de valor y/o artículos de lujo no declarados en el embarque y transportados como equipaje ni por los bienes personales y/o equipajes perdidos en el salón de pasajeros y terminales.");
+		printer.println("TERMINO Y CONDICIONES AL REVERSO DEL BOLETO");
 	    printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
 
