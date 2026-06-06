@@ -1219,7 +1219,7 @@ app.post('/ticket/invoice/20608151771', (req, res) => { // ANGEL DIVINO BUS - 20
         printer.println(`Calle Nicolás de Pierola 720 URB.Campodonico- Chiclayo`)
         printer.println(`PUNTO DE EMISIÓN: ${body.seller_agency}`)
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
-	    printer.println(`Venta internet autorizados: 958842029 - Chiclayo | 954909021 - Chiclayo | 942057662 - Chiclayo`);
+	    printer.println(`Venta internet autorizados Chiclayo: 958842029 |954909021| 942057662| 907758392`);
         printer.println(printLines());
 
         let invoice_type = "BOLETA DE VENTA ELECTRÓNICA"
