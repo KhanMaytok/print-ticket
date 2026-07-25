@@ -43,9 +43,9 @@ namespace MeliPrinter.Services
 
                 if (CompareVersions(latest, current) > 0)
                 {
-                    var zipUrl = release["zipball_url"]?.Value<string>();
-                    if (zipUrl == null && release["assets"] != null && release["assets"].HasValues)
-                        zipUrl = release["assets"][0]?["browser_download_url"]?.Value<string>();
+                var zipUrl = release["assets"]?[0]?["browser_download_url"]?.Value<string>();
+                if (zipUrl == null)
+                    zipUrl = release["zipball_url"]?.Value<string>();
 
                     Console.WriteLine($"[Updater] Nueva versi\u00f3n disponible: {latest}");
                     return new JObject
