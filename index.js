@@ -975,7 +975,9 @@ app.post('/ticket/invoice/20600916239', (req, res) => { // SOL CHOTANO - 2060091
         const forma_pago = body.payment_type.toUpperCase() === 'EFECTIVO' ? 'CONTADO' :  body.payment_type;
         printer.println(`FORMA DE PAGO: ${forma_pago}`);
         printer.bold(false);
-        printer.println(printLines()); //----------------------------------
+        printer.println(`TERMINOS Y CONDICIONES`);
+		printer.println("1.- El pasajero tiene derecho a 10 kg de equipaje.");
+		printer.println("2.- Presentarse 15 minutos antes de que salga el turno");
         printer.println(`${body.invoice_footer || ''}`);
 
         printer.alignCenter();
