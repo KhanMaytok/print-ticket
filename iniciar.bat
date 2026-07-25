@@ -1,18 +1,22 @@
 @echo off
+title MeliPrinter
+cd /d "%~dp0"
 
-echo "CERRANDO OTROS PROCESOS DE IMPRESIÓN"
-taskkill /f /im node.exe
+echo Cerrando instancias anteriores...
+taskkill /f /im meliprinter.exe 2>nul
+taskkill /f /im node.exe 2>nul
+taskkill /f /im nodemon.exe 2>nul
 
-echo "COMPROBANDO ACTUALIZACIONES"
-call git stash
-call git pull origin node12
-call nodemon index.js
+echo.
+echo Iniciando MeliPrinter...
+echo.
 
-echo " _____       _      _           _       "
-echo "|_   _|     (_)    (_)         | |      "
-echo "  | |  _ __  _  ___ _  __ _  __| | ___  "
-echo "  | | | '_ \| |/ __| |/ _` |/ _` |/ _ \ "
-echo " _| |_| | | | | (__| | (_| | (_| | (_) |"
-echo "|_____|_| |_|_|\___|_|\__,_|\__,_|\___/ "
+:: Usar SEA executable si existe, sino node
+if exist "%~dp0meliprinter.exe" (
+    "%~dp0meliprinter.exe"
+) else (
+    node src/index.js
+)
 
+echo.
 pause

@@ -1,21 +1,45 @@
 @echo off
+title INSTALAR MELIPRINTER
+cd /d "%~dp0"
+
+echo ========================================
+echo  Instalacion de MeliPrinter
+echo ========================================
+echo.
+
+echo 1/4 Configurando git...
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
-rmdir /Q/S node_modules
-git init
-git remote add origin https://github.com/KhanMaytok/print-ticket.git
-git add --all
-git commit -m "juajua"
-git fetch --all
-git reset --hard origin/node12
-git pull origin node12
-call npm install -g nodemon@2.0.22
+
+echo 2/4 Clonando repositorio...
+if not exist "%~dp0\.git" (
+    rmdir /Q/S node_modules 2>nul
+    git init
+    git remote add origin https://github.com/KhanMaytok/print-ticket.git
+    git fetch --all
+    git reset --hard origin/master
+    git pull origin master
+)
+
+echo 3/4 Instalando dependencias...
 call npm install
-call npm install printer --msvs_version=2017  --build-from-source
-echo " _______        _       _           _        _           _       "
-echo "|__   __|      | |     (_)         | |      | |         | |      "
-echo "   | | ___   __| | ___  _ _ __  ___| |_ __ _| | __ _  __| | ___  "
-echo "   | |/ _ \ / _` |/ _ \| | '_ \/ __| __/ _` | |/ _` |/ _` |/ _ \ "
-echo "   | | (_) | (_| | (_) | | | | \__ \ || (_| | | (_| | (_| | (_) |"
-echo "   |_|\___/ \__,_|\___/|_|_| |_|___/\__\__,_|_|\__,_|\__,_|\___/ "
+
+echo 4/4 Copiando archivos de configuracion...
+if not exist "%~dp0\.env" (
+    copy .env.template .env
+)
+if not exist "%~dp0\additional_data.js" (
+    copy additional_data.js.template additional_data.js
+)
+
+echo.
+echo ========================================
+echo  Instalacion completada!
+echo  Ejecuta iniciar.bat para iniciar
+echo ========================================
+echo.
+echo  Para compilar a .exe:
+echo  npm run build
+echo.
+
 pause

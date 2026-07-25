@@ -9,6 +9,6 @@ const client_data = {
   6. El pasajero que no se presenta a la hora indicada perderá el valor íntegro del boleto. 
   8. La empresa no se responsabiliza por maletas, paquetes y bulto que contenga dinero, alhajas y objetos de valor que no hubiesen sido declarados previamente.
   9. En caso de perdida de un bulto de equipaje siempre que esté amparado por el comprobante respectivo, la empresa solo abonara el máximo de cincuenta soles(s/.50) de acuerdo con los articulos 105 al 190 de R.G de ff.cc.`
-}
+};
 
-module.exports = { client_data }
+export { client_data }
