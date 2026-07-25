@@ -62,3 +62,50 @@ Variables de entorno:
 - QR se genera con comandos ESC/POS estándar GS (k.
 - La impresora se detecta automáticamente como la predeterminada del sistema.
 - El encoding 437 requiere `System.Text.Encoding.CodePages` registrado en Program.cs.
+
+## Session State (última sesión — continuar aquí)
+
+### Branch: `sisharp`
+
+### Qué se hizo
+- Migración completa de Node.js a C# (.NET Core 3.1) con todas las rutas, 22 empresas, 10 templates de impresión.
+- Sistema de auto-update implementado en `UpdateService.cs`:
+  - `CheckForUpdates()` consulta GitHub API → `releases/latest`
+  - Prioriza `assets[0].browser_download_url` sobre `zipball_url` (fix aplicado)
+  - `DownloadAndApplyUpdate()` descarga zip, extrae a `.update/`, genera `actualizar.bat`
+  - `RestartWithUpdate()` ejecuta el bat y mata el proceso
+  - `ApplyUpdateAndRestart()` (invocado via `--apply-update`) hace swap por PowerShell
+- Form URL-encoded parsing con `ParseBody()` + `SetNestedValue()` para claves anidadas tipo `embark[date]`.
+- CI en `.github/workflows/build.yml`: tag `v*` → build → zip → release asset.
+- Release **v2.0.4** subida a GitHub con zip correcto (40.9 MB, contiene `MeliPrinter.exe` + config).
+- `dist/MeliPrinter.exe` compilado con código actualizado (confirmado: strings `Descargando`, `desde`, `CompareVersions` presentes en el binario).
+
+### Estado actual
+- Al iniciar, MeliPrinter busca updates. Si encuentra v2.0.4, descarga el zip, extrae el .exe a `.update/`, genera `actualizar.bat` en el directorio base.
+- `actualizar.bat` espera en un loop (`:wait`) hasta que el proceso MeliPrinter.exe termine, entonces copia el nuevo .exe y reinicia.
+- **Pendiente**: Prueba E2E completa del flujo de actualización:
+  1. Ejecutar `dist\MeliPrinter.exe`
+  2. Ver en consola que detecta v2.0.4, descarga, extrae y genera `actualizar.bat`
+  3. Cerrar/terminar el proceso (Ctrl+C o Taskkill)
+  4. Verificar que `actualizar.bat` completa el swap y reinicia con la nueva versión
+  5. Verificar que `version.txt` se actualizó a `2.0.4`
+
+### Cómo comprobar estado del binario
+```powershell
+Select-String -Path "dist\MeliPrinter.exe" -Pattern "Descargando" -SimpleMatch
+```
+Si aparece la string, el binario tiene el código nuevo.
+
+### Cómo publicar nueva versión
+```powershell
+# 1. Actualizar MeliPrinter\version.txt
+# 2. Hacer commit + tag
+git add MeliPrinter/version.txt && git commit -m "bump vX.Y.Z"
+git tag vX.Y.Z
+git push origin sisharp --tags
+# 3. GitHub Actions compila y sube release asset automáticamente
+```
+
+### Variables de entorno relevantes
+- `NO_UPDATE=true` — desactiva el check de actualizaciones al inicio
+- `PRINTER_NAME` — nombre de impresora específica (si no se usa la predeterminada)
