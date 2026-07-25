@@ -8,12 +8,20 @@ import { fileURLToPath, pathToFileURL } from 'url';
 
 config();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, '..');
-const require = createRequire(import.meta.url);
+const scriptDir = (() => {
+  try { return dirname(fileURLToPath(import.meta.url)); }
+  catch { return typeof __dirname !== 'undefined' ? __dirname : process.cwd(); }
+})();
+const root = existsSync(join(scriptDir, 'additional_data.js.template'))
+  ? scriptDir
+  : join(scriptDir, '..');
+const _require = (() => {
+  try { return createRequire(import.meta.url); }
+  catch { return typeof require !== 'undefined' ? require : null; }
+})();
 
 import printerDriver from './printer-driver.js';
-const { printer: ThermalPrinter, types: PrinterTypes } = require('node-thermal-printer');
+const { printer: ThermalPrinter, types: PrinterTypes } = _require('node-thermal-printer');
 
 import { getEnterprise } from './enterprises.js';
 import {

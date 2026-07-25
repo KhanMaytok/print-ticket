@@ -2,7 +2,10 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = (() => {
+  try { return dirname(fileURLToPath(import.meta.url)); }
+  catch { return process.cwd(); }
+})();
 const root = join(__dirname, '..');
 
 export function getCurrentVersion() {
