@@ -19,7 +19,7 @@ namespace MeliPrinter
                 return;
             }
 
-            var version = "2.0.0";
+            var version = "2.0.11";
             Console.WriteLine($"[meliprinter] v{version} - Iniciando...");
 
             var host = CreateHostBuilder(args).Build();
