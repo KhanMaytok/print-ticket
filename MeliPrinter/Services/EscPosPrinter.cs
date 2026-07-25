@@ -239,6 +239,8 @@ namespace MeliPrinter.Services
         {
             if (_buffer.Count == 0) return false;
             bool result = RawPrinterHelper.PrintRaw(_printerName, _buffer.ToArray());
+            if (!result)
+                Console.Error.WriteLine($"[printer] Error enviando datos a la impresora '{_printerName}'");
             return result;
         }
     }

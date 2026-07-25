@@ -25,10 +25,51 @@ namespace MeliPrinter.Controllers
 
         private JObject ParseBody()
         {
+            if (Request.HasFormContentType)
+            {
+                var form = Request.Form;
+                var obj = new JObject();
+                foreach (var kv in form)
+                {
+                    var key = kv.Key.Replace("%5B", "[").Replace("%5D", "]");
+                    SetNestedValue(obj, key, kv.Value.ToString());
+                }
+                return obj;
+            }
+
             var body = Request.Body;
             using var reader = new System.IO.StreamReader(body);
             var text = reader.ReadToEndAsync().Result;
             return JObject.Parse(text);
+        }
+
+        private static void SetNestedValue(JObject root, string key, string value)
+        {
+            if (!key.Contains("["))
+            {
+                root[key] = value;
+                return;
+            }
+
+            var parts = key.Split(new[] { '[' }, 2);
+            var name = parts[0];
+            var rest = parts[1].TrimEnd(']');
+
+            var remainingBracket = rest.IndexOf('[');
+            if (remainingBracket >= 0)
+            {
+                var subKey = rest.Substring(0, remainingBracket);
+                var subRest = rest.Substring(remainingBracket);
+                if (root[name] == null)
+                    root[name] = new JObject();
+                SetNestedValue((JObject)root[name], subKey + "[" + subRest, value);
+            }
+            else
+            {
+                if (root[name] == null)
+                    root[name] = new JObject();
+                ((JObject)root[name])[rest] = value;
+            }
         }
 
         [HttpPost("ticket/invoice/{ruc}")]
