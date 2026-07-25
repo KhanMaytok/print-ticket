@@ -1,7 +1,17 @@
-node_modules/
-additional_data.js
-custom_logo.png
-.env
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+.vs/
+*.nupkg
+
+## Build output
 dist/
-.update/
-*.blob
+
+## IDE
+.idea/
+*.swp
+*.swo
+*~

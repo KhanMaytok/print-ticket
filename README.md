@@ -1,229 +1,59 @@
-# MeliPrinter — Servidor de Impresión Térmica
+# MeliPrinter
 
-Servidor Express que recibe peticiones HTTP e imprime tickets en impresoras térmicas (EPSON POS). Usado por múltiples empresas de transporte para imprimir boletos/facturas electrónicas, guías de remisión, giros y encomiendas.
-
----
+Servidor de impresión térmica para tickets de buses — reescrito en C# (.NET Core 3.1) como single-file executable.
 
 ## Requisitos
 
-- **Node.js 22+** (recomendado Node 24)
-- **Windows** (el driver de impresión usa API nativa de Windows)
-- Una impresora térmica configurada como **impresora por defecto** en Windows
-- Python y Visual Studio Build Tools **solo si compilas el .exe** (para SEA)
+- Windows 7+ (x64)
+- Impresora térmica EPSON (o compatible con ESC/POS) instalada como predeterminada
+- .NET Core 3.1 Runtime **solo si usas el framework-dependent**. Si usas el self-contained publish no necesitas nada.
 
-## Instalación Rápida
+## Compilar
 
-```bash
-git clone https://github.com/KhanMaytok/print-ticket.git
-cd print-ticket
-npm install
+```powershell
+dotnet publish MeliPrinter\MeliPrinter.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o dist
 ```
 
-Esto crea automáticamente:
-- `.env` a partir de `.env.template`
-- `additional_data.js` a partir de `additional_data.js.template`
+## Ejecutar
 
-## Uso
-
-```bash
-npm start
-# o
-node src/index.js
+```powershell
+dist\MeliPrinter.exe
 ```
 
-El servidor inicia en `http://localhost:3030`.
+Por defecto corre en `http://localhost:3030`.
 
-### Endpoints
+## Rutas
 
+### Tickets
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| `GET` | `/` | Health check (versión, impresora, puerto) |
-| `POST` | `/ticket/invoice/:ruc` | Imprimir boleto/factura por RUC |
-| `POST` | `/credit-note` | Nota de crédito |
-| `POST` | `/money-transfer/` | Giro/transferencia |
-| `POST` | `/logistics/` | Ticket de logística |
-| `POST` | `/logistics/budget` | Recibo de ingresos/egresos |
-| `POST` | `/encomiendas/` | Encomienda |
-| `POST` | `/courier/:ruc` | Courier por empresa |
-| `POST` | `/courier/shipping-order/:ruc` | Guía de remisión |
-| `POST` | `/grt/:ruc` | Guía de remisión transportista |
+| POST | `/ticket/invoice/:ruc` | Boleta/factura de pasaje |
+| POST | `/credit-note` | Nota de crédito |
+| POST | `/encomiendas` | Encomienda/courier |
+| POST | `/money-transfer` | Giro/transferencia |
+| POST | `/logistics` | Ticket de logística |
+| POST | `/logistics/budget` | Recibo de ingresos/egresos |
+| POST | `/courier/:ruc` | Encomienda genérica por RUC |
+| POST | `/courier/shipping-order/20529682248` | Guía de remisión |
+| POST | `/grt/20529682248` | Guía de remisión transportista |
 
-### Ejemplo de petición
-
-```bash
-curl -X POST http://localhost:3030/ticket/invoice/20395419715 \
-  -H "Content-Type: application/json" \
-  -d '{
-    "enterprise_name": "TOURS ANGEL DIVINO",
-    "serie": "B001",
-    "number": "12345",
-    "total": "50.00",
-    "payment_type": "EFECTIVO",
-    "departure": "CHICLAYO",
-    "arrival": "TRUJILLO",
-    "departure_date": "25/07/2026",
-    "schedule_hour": "10:00",
-    "departure_hour": "09:30",
-    "seat": "A1",
-    "dni": "12345678",
-    "passenger_name": "Juan Perez",
-    "buy_date": "25/07/2026",
-    "seller": "Admin",
-    "enterprise_client_id": "0"
-  }'
-```
-
----
-
-## Compilar a .exe (Windows)
-
-El proyecto usa **SEA (Single Executable Application)** de Node.js para crear un ejecutable independiente.
-
-### Requisitos para compilar
-
-1. **Visual Studio 2022** con workload "Desktop development with C++"
-2. **Python 3.x** en PATH
-3. Node.js 22+
-
-### Compilar
-
-```bash
-npm run build
-```
-
-Esto genera en `dist/`:
-
-```
-dist/
-├── meliprinter.exe       ← Ejecutable principal (~90 MB)
-├── modules/              ← Módulos nativos (node-thermal-printer)
-├── logo.png
-└── iniciar.bat           ← Launcher
-```
-
-### Distribuir a clientes
-
-1. Ejecuta `npm run build`
-2. Comprime toda la carpeta `dist/` en un ZIP
-3. En la PC cliente:
-   - Extrae el ZIP
-   - Ejecuta `iniciar.bat`
-
-> **Nota:** El .exe pesa ~90 MB porque incluye el runtime de Node.js. Se puede reducir empaquetando con UPX.
-
----
-
-## Auto-Update
-
-El servidor verifica automáticamente si hay una versión nueva en GitHub Releases:
-
-- **Al iniciar**: consulta `api.github.com/repos/KhanMaytok/print-ticket/releases/latest`
-- **Periódicamente**: cada 24 horas (configurable con `UPDATE_INTERVAL` en `.env`)
-
-Si hay una versión nueva, genera `actualizar.bat` con los comandos para actualizar.
-
-### Desactivar auto-update
-
-En `.env`:
-```
-NO_UPDATE=true
-```
-
-### Actualización manual
-
-Ejecutar `actualizar.bat` en la PC cliente:
-```batch
-actualizar.bat   # Hace git pull + npm install
-```
-
----
+### Health
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/` | Estado, versión, impresora |
 
 ## Configuración
 
-### `.env`
-
-```env
-PORT=3030                    # Puerto del servidor
-NO_UPDATE=false              # Desactivar auto-update
-UPDATE_INTERVAL=86400000     # Intervalo de chequeo (ms)
-```
-
-### `additional_data.js`
-
-Configuración específica del cliente. Se copia desde `additional_data.js.template` si no existe.
-
-```js
-export const client_data = {
-  print_bottom: true,        // Mostrar texto al pie del ticket
-  bottom_text: `...`         // Texto a mostrar (términos, condiciones)
+Editar `appsettings.json`:
+```json
+{
+  "Urls": "http://0.0.0.0:3030",
+  "UpdateIntervalHours": 24
 }
 ```
 
-### `custom_logo.png`
+Datos adicionales del cliente en `additional_data.json`.
 
-Si existe, reemplaza el logo estándar. Debe ser una imagen PNG del tamaño del ancho del ticket térmico.
+## Versión
 
----
-
-## Añadir una Nueva Empresa
-
-Las empresas se definen en `src/enterprises.js`. Solo agrega una nueva entrada:
-
-```js
-'20609999999': {
-  name: 'MI EMPRESA',
-  header: (b) => [
-    { text: b.enterprise_name, bold: true, align: 'center' },
-    { text: b.enterprise_address },
-    { text: `PUNTO DE EMISIÓN: ${b.seller_agency}` },
-    { text: `R.U.C. 20609999999` },
-  ],
-  invoiceLabel: { boleta: 'BOLETA ELECTRÓNICA', factura: 'FACTURA ELECTRÓNICA', vale: 'VALE' },
-  extraFields: ['soat_provider', 'soat'],
-  terms: [
-    'Término 1...',
-    'Término 2...',
-  ],
-},
-```
-
-### Campos de configuración
-
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| `header` | `(body) => [...]` | Función que retorna líneas del encabezado |
-| `invoiceLabel` | `{boleta, factura, vale}` | Nombres según tipo de comprobante |
-| `useEmbarkTime` | `boolean` | Si usa formato de hora de embarque |
-| `showUbigeo` | `boolean` | Si muestra ubigeo en origen/destino |
-| `extraFields` | `string[]` | Campos adicionales a imprimir |
-| `terms` | `string[]` | Términos y condiciones |
-
----
-
-## Desarrollo
-
-```bash
-npm run dev    # Inicia con node --watch (hot reload)
-```
-
-### Estructura del proyecto
-
-```
-src/
-├── index.js              ← Entry point, rutas Express
-├── enterprises.js        ← Configuración de empresas
-├── print.js              ← Funciones de impresión
-├── numeroALetra.js       ← Conversor números a letras
-├── printer-driver.js     ← Driver Windows (ESM)
-├── printer-driver.cjs    ← Driver Windows (CJS)
-└── updater.js            ← Auto-update
-scripts/
-├── build.js              ← Compila .exe
-└── postinstall.js        ← Setup post-instalación
-```
-
----
-
-## Licencia
-
-ISC
+Editar `version.txt` para cambiar la versión reportada.
