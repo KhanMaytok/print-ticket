@@ -13,6 +13,7 @@ namespace MeliPrinter.Services
         private static readonly string GitHubApi = "https://api.github.com/repos/KhanMaytok/print-ticket/releases/latest";
         private static readonly string UserAgent = "MeliPrinter/2.0";
 
+        // Lee la versión actual desde version.txt
         public string GetCurrentVersion()
         {
             try
@@ -87,14 +88,14 @@ namespace MeliPrinter.Services
 
             try
             {
-                Console.WriteLine($"[Updater] Descargando v{version}...");
+                Console.WriteLine($"[Updater] Descargando v{version} desde {downloadUrl}...");
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                 client.Timeout = TimeSpan.FromMinutes(5);
 
                 var data = await client.GetByteArrayAsync(downloadUrl);
                 await File.WriteAllBytesAsync(zipPath, data);
-                Console.WriteLine($"[Updater] Descarga completa ({data.Length / 1024 / 1024} MB)");
+                Console.WriteLine($"[Updater] Descarga completa ({data.Length / 1024 / 1024} MB, {data.Length} bytes)");
 
                 if (Directory.Exists(extractDir))
                     Directory.Delete(extractDir, true);
