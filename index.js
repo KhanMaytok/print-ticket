@@ -3086,7 +3086,7 @@ app.post('/courier/20608151771', (req, res) => {
         printer.println(printLines()); //------------------------------------------
         // CLIENTE REAL
         printer.bold(true);
-        printer.println(`CLIENTE`);
+        printer.println(`CONSIGNADO`);
         printer.bold(false);
         printer.println(`DNI/RUC           : ${body.customer_id}`);
         printer.println(`NOMBRE/RAZ. SOCIAL: ${body.customer}`);
