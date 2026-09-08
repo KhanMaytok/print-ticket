@@ -3156,6 +3156,9 @@ app.post('/courier/20608151771', (req, res) => {
         printer.println(`_______________________   |          |`);
         printer.println(`FIRMA Y HUELLA DIGITAL    |          |`);
         printer.println(`DNI                       +----------+`);
+		printer.println(`NO VÁLIDO PARA EFECTOS CONTABLES O TRIBUTARIOS`);
+		printer.println(`al momento que recoja la encomienda, sírvase canjear por su comprobante de pago`.toUpperCase());
+		printer.println(`si la encomienda no se recoge en 30 días, será declarada en abandono. pudiendo recojerse hasta 05 meses después pagando los costos de almacenaje, flete y gastos, luego de ello se remitirá al MTC; conforme a ley.`.toUpperCase());
 
         printer.alignCenter();
         printer.printQR(`${body.ticket_id}`)
