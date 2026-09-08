@@ -3046,7 +3046,7 @@ app.post('/courier/20608151771', (req, res) => {
             invoice_type = "FACTURA DE VENTA ELECTRÓNICA";
         }
         if (body.serie.startsWith('V')) {
-            invoice_type = "CONSTANCIA DE VENTA"
+            invoice_type = "GUÍA INTERNA DE TRASLADO"
         }
 
         printer.println(`${invoice_type}`);
