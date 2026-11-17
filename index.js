@@ -2622,7 +2622,7 @@ app.post('/ticket/invoice/20495803121', (req, res) => { // Tours Corazon E.I.R.L
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
-		const bodicyto = body.soat || "";
+		const bodicyto = body.soat ?? "";
     	const footirito = ```
         ASEGURADO CON: RIMAC SEGUROS
         POLIZA N°: ${bodicyto}
