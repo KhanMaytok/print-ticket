@@ -2622,9 +2622,10 @@ app.post('/ticket/invoice/20495803121', (req, res) => { // Tours Corazon E.I.R.L
         printer.bold(false);
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
+		const bodicyto = body.soat || "";
     	const footirito = ```
         ASEGURADO CON: RIMAC SEGUROS
-        POLIZA N°: ${body.soat || ""}
+        POLIZA N°: ${bodicyto}
         TERMINOS Y CONDICIONES
         1.- El pasajero deberá presentarse 30 min antes al horario de salida del bus.
         2.- Niños a partir de 5 años deberán adquirir su boleto. Los menores deben viajar acompañados de padre o madre presentando su DNI y/o Partida de Nacimiento original.
