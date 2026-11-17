@@ -2623,17 +2623,17 @@ app.post('/ticket/invoice/20495803121', (req, res) => { // Tours Corazon E.I.R.L
         printer.println(printLines()); //----------------------------------
         printer.println(`${body.invoice_footer || ''}`);
 		const bodicyto = (body.soat !== undefined && body.soat !== null) ? body.soat : "";
-    	const footirito = ```
-        ASEGURADO CON: RIMAC SEGUROS
-        POLIZA N°: ${bodicyto}
-        TERMINOS Y CONDICIONES
-        1.- El pasajero deberá presentarse 30 min antes al horario de salida del bus.
-        2.- Niños a partir de 5 años deberán adquirir su boleto. Los menores deben viajar acompañados de padre o madre presentando su DNI y/o Partida de Nacimiento original.
-        los niños mayores de 14 años, deben viajar acompañados por un adulto, presentando su DNI y/o Partida de Nacimiento, así como permiso de viaje notarial y/o judicial.
-        3.- El pasajero tiene derecho a transportar sin costo hasta 20K de equipaje, considerándose como tal: maletas, maletines y bolsos que contengan artículos de uso personal. (DS N 182-2013-EF, Art. 2).
-        4.- La empresa no se responsabiliza por dinero, alhajas, objetos de valor y/o artículos de lujo no declarados en el embarque y transportados como equipaje ni por los bienes personales y/o equipajes perdidos en el salón de pasajeros y terminales.
-        TERMINO Y CONDICIONES AL REVERSO DEL BOLETO
-        ```
+const footirito = `
+ASEGURADO CON: RIMAC SEGUROS
+POLIZA N°: ${bodicyto}
+TERMINOS Y CONDICIONES
+1.- El pasajero deberá presentarse 30 min antes al horario de salida del bus.
+2.- Niños a partir de 5 años deberán adquirir su boleto. Los menores deben viajar acompañados de padre o madre presentando su DNI y/o Partida de Nacimiento original.
+los niños mayores de 14 años, deben viajar acompañados por un adulto, presentando su DNI y/o Partida de Nacimiento, así como permiso de viaje notarial y/o judicial.
+3.- El pasajero tiene derecho a transportar sin costo hasta 20K de equipaje, considerándose como tal: maletas, maletines y bolsos que contengan artículos de uso personal. (DS N 182-2013-EF, Art. 2).
+4.- La empresa no se responsabiliza por dinero, alhajas, objetos de valor y/o artículos de lujo no declarados en el embarque y transportados como equipaje ni por los bienes personales y/o equipajes perdidos en el salón de pasajeros y terminales.
+TERMINO Y CONDICIONES AL REVERSO DEL BOLETO
+`;
         printer.println(footirito);
 	    printer.alignCenter();
         //printer.printQR(`${body.ticket_id}`)
