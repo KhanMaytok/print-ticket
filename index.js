@@ -1567,7 +1567,7 @@ app.post('/ticket/invoice/20529682248', (req, res) => { // CRUCERO JAEN - 205296
         printer.println(`R.U.C. ${body.enterprise_ruc}`);
         printer.println(printLines());
         printer.println(`${body.arrival} - ${body.ubigeo_arrival}`);
-      	printer.println(`Ventas sólo WhatsApp: 963450965; 967713300; 963450965`);
+      	printer.println(`Ventas sólo WhatsApp: 963450965; 967713300`);
 		printer.println(`Reclamos sólo WhatsApp 999985143`);		
         let invoice_type = "BOLETA ELECTRÓNICA"
         if (body.enterprise_client_id !== "0") {
